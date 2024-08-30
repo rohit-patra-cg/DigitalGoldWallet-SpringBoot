@@ -1,15 +1,18 @@
 package com.example.demo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.PostResponse;
 import com.example.demo.entity.Payment;
 import com.example.demo.entity.PhysicalGoldTransaction;
 import com.example.demo.entity.TransactionHistory;
 import com.example.demo.entity.User;
 import com.example.demo.entity.VirtualGoldHolding;
+import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.PaymentRepository;
 import com.example.demo.repository.PhysicalGoldTransactionRepository;
@@ -91,6 +94,15 @@ public class UserServiceImpl implements UserService {
 	public List<Payment> getAllPaymentsByUserId(int userId) throws UserNotFoundException {
 		getUserByUserId(userId);
 		return paymentRepository.findAllByUserId(userId);
+	}
+
+	@Override
+	public PostResponse createUser(User user) throws UserAlreadyExistsException {
+		if (userRepository.findByName(user.getName()).isEmpty()) {
+			userRepository.save(user);
+			return new PostResponse(new Date(), "User details added successfully.");
+		}
+		throw new UserAlreadyExistsException("User already exists.");
 	}
 
 }
