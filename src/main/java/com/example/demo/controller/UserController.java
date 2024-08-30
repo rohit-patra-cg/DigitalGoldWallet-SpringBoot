@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.entity.Payment;
+import com.example.demo.entity.PhysicalGoldTransaction;
+import com.example.demo.entity.TransactionHistory;
 import com.example.demo.entity.User;
 import com.example.demo.entity.VirtualGoldHolding;
 import com.example.demo.exception.UserNotFoundException;
@@ -54,5 +57,20 @@ public class UserController {
 	@GetMapping("/{user_id}/virtual_gold_holdings")
 	ResponseEntity<List<VirtualGoldHolding>> getAllVirtualGoldHoldingsByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
 		return ResponseEntity.ok(userService.getAllVirtualGoldHoldingsByUserId(userId));
+	}
+	
+	@GetMapping("/{user_id}/physical_gold_holdings")
+	ResponseEntity<List<PhysicalGoldTransaction>> getAllPhysicalGoldHoldingsByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
+		return ResponseEntity.ok(userService.getAllPhysicalGoldTransactionsByUserId(userId));
+	}
+
+	@GetMapping("/{user_id}/transaction_history")
+	ResponseEntity<List<TransactionHistory>> getAllTransactionsByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
+		return ResponseEntity.ok(userService.getAllTransactionsByUserId(userId));
+	}
+	
+	@GetMapping("/{user_id}/payments")
+	ResponseEntity<List<Payment>> getAllPaymentsByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
+		return ResponseEntity.ok(userService.getAllPaymentsByUserId(userId));
 	}
 }

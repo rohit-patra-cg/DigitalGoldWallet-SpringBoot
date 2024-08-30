@@ -5,9 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.Payment;
+import com.example.demo.entity.PhysicalGoldTransaction;
+import com.example.demo.entity.TransactionHistory;
 import com.example.demo.entity.User;
 import com.example.demo.entity.VirtualGoldHolding;
 import com.example.demo.exception.UserNotFoundException;
+import com.example.demo.repository.PaymentRepository;
+import com.example.demo.repository.PhysicalGoldTransactionRepository;
+import com.example.demo.repository.TransactionHistoryRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.VirtualGoldHoldingRepository;
 
@@ -16,8 +22,18 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
 	@Autowired
 	private VirtualGoldHoldingRepository virtualGoldHoldingRepository;
+
+	@Autowired
+	private PhysicalGoldTransactionRepository physicalGoldTransactionRepository;
+	
+	@Autowired
+	private TransactionHistoryRepository transactionHistoryRepository;
+	
+	@Autowired
+	private PaymentRepository paymentRepository;
 
 	@Override
 	public List<User> getAllUsers() {
@@ -58,5 +74,23 @@ public class UserServiceImpl implements UserService {
 		return virtualGoldHoldingRepository.findAllVirtualGoldHoldingByUserId(userId);
 	}
 
-	
+	@Override
+	public List<PhysicalGoldTransaction> getAllPhysicalGoldTransactionsByUserId(int userId)
+			throws UserNotFoundException {
+		getUserByUserId(userId);
+		return physicalGoldTransactionRepository.findAllPhysicalGoldTransactionsByUserId(userId);
+	}
+
+	@Override
+	public List<TransactionHistory> getAllTransactionsByUserId(int userId) throws UserNotFoundException {
+		getUserByUserId(userId);
+		return transactionHistoryRepository.findAllByUserId(userId);
+	}
+
+	@Override
+	public List<Payment> getAllPaymentsByUserId(int userId) throws UserNotFoundException {
+		getUserByUserId(userId);
+		return paymentRepository.findAllByUserId(userId);
+	}
+
 }
