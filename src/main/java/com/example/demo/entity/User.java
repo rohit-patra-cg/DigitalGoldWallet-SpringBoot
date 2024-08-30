@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +37,7 @@ public class User {
 
 	@ManyToOne
 	@JoinColumn(name = "address_id")
+	@JsonIgnore
 	private Address address;
 
 	@Min(value = 0, message = "Balance must be positive")

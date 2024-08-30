@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.VirtualGoldHolding;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.UserService;
 
@@ -45,4 +46,13 @@ public class UserController {
 		return ResponseEntity.ok(userService.getAllUsersByState(state));
 	}
 
+	@GetMapping("/check_balance/{user_id}")
+	ResponseEntity<Double> getUserBalanceByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
+		return ResponseEntity.ok(userService.getUserBalanceByUserId(userId));
+	}
+	
+	@GetMapping("/{user_id}/virtual_gold_holdings")
+	ResponseEntity<List<VirtualGoldHolding>> getAllVirtualGoldHoldingsByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
+		return ResponseEntity.ok(userService.getAllVirtualGoldHoldingsByUserId(userId));
+	}
 }

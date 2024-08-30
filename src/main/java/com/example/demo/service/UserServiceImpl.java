@@ -2,20 +2,22 @@ package com.example.demo.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.VirtualGoldHolding;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.repository.VirtualGoldHoldingRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
 
+	@Autowired
 	private UserRepository userRepository;
-
-	public UserServiceImpl(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+	@Autowired
+	private VirtualGoldHoldingRepository virtualGoldHoldingRepository;
 
 	@Override
 	public List<User> getAllUsers() {
@@ -44,4 +46,17 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAllByState(state);
 	}
 
+	@Override
+	public Double getUserBalanceByUserId(int userId) throws UserNotFoundException {
+		User user = getUserByUserId(userId);
+		return user.getBalance();
+	}
+
+	@Override
+	public List<VirtualGoldHolding> getAllVirtualGoldHoldingsByUserId(int userId) throws UserNotFoundException {
+		getUserByUserId(userId);
+		return virtualGoldHoldingRepository.findAllVirtualGoldHoldingByUserId(userId);
+	}
+
+	
 }
