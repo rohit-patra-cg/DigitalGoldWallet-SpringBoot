@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -34,14 +33,14 @@ public class User {
 	@Size(max = 100, message = "Name can't be longer than 100 characters")
 	private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "address_id")
 	private Address address;
 
 	@Min(value = 0, message = "Balance must be positive")
 	private Double balance = 0.0;
 
-	@Column(updatable = false)
+	@Column(updatable = false,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
 	public int getUserId() {
