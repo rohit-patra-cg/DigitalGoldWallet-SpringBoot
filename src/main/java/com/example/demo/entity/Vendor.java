@@ -52,11 +52,11 @@ public class Vendor {
 	@Column(updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	public int getVendorId() {
+	public Integer getVendorId() {
 		return vendorId;
 	}
 
-	public void setVendorId(int vendorId) {
+	public void setVendorId(Integer vendorId) {
 		this.vendorId = vendorId;
 	}
 

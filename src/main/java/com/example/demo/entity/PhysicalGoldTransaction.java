@@ -20,7 +20,7 @@ public class PhysicalGoldTransaction {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int transactionId;
+	private Integer transactionId;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -41,11 +41,11 @@ public class PhysicalGoldTransaction {
 	@Column(updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	public int getTransactionId() {
+	public Integer getTransactionId() {
 		return transactionId;
 	}
 
-	public void setTransactionId(int transactionId) {
+	public void setTransactionId(Integer transactionId) {
 		this.transactionId = transactionId;
 	}
 

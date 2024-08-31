@@ -14,7 +14,7 @@ public class Address {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int addressId;
+	private Integer addressId;
 
 	@NotBlank(message = "Street is mandatory")
 	@Size(max = 255, message = "Street can't be longer than 255 characters")
@@ -35,11 +35,11 @@ public class Address {
 	@Size(max = 100, message = "Country can't be longer than 100 characters")
 	private String country;
 
-	public int getAddressId() {
+	public Integer getAddressId() {
 		return addressId;
 	}
 
-	public void setAddressId(int addressId) {
+	public void setAddressId(Integer addressId) {
 		this.addressId = addressId;
 	}
 

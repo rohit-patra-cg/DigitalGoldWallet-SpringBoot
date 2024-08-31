@@ -24,7 +24,7 @@ public class Payment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int paymentId;
+	private Integer paymentId;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -45,13 +45,11 @@ public class Payment {
 	@Column(updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	// Getters and Setters
-
-	public int getPaymentId() {
+	public Integer getPaymentId() {
 		return paymentId;
 	}
 
-	public void setPaymentId(int paymentId) {
+	public void setPaymentId(Integer paymentId) {
 		this.paymentId = paymentId;
 	}
 

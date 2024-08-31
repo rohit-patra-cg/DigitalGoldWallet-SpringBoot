@@ -24,7 +24,7 @@ public class TransactionHistory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int transactionId;
+	private Integer transactionId;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -50,13 +50,11 @@ public class TransactionHistory {
 	@Column(updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	// Getters and Setters
-
-	public int getTransactionId() {
+	public Integer getTransactionId() {
 		return transactionId;
 	}
 
-	public void setTransactionId(int transactionId) {
+	public void setTransactionId(Integer transactionId) {
 		this.transactionId = transactionId;
 	}
 

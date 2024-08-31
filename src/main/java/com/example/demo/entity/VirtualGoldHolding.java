@@ -20,7 +20,7 @@ public class VirtualGoldHolding {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int holdingId;
+	private Integer holdingId;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -37,13 +37,11 @@ public class VirtualGoldHolding {
 	@Column(updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	// Getters and Setters
-
-	public int getHoldingId() {
+	public Integer getHoldingId() {
 		return holdingId;
 	}
 
-	public void setHoldingId(int holdingId) {
+	public void setHoldingId(Integer holdingId) {
 		this.holdingId = holdingId;
 	}
 

@@ -18,7 +18,7 @@ public class VendorBranch {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int branchId;
+	private Integer branchId;
 
 	@ManyToOne
 	@JoinColumn(name = "vendor_id")
@@ -34,13 +34,11 @@ public class VendorBranch {
 	@Column(updatable = false)
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	// Getters and Setters
-
-	public int getBranchId() {
+	public Integer getBranchId() {
 		return branchId;
 	}
 
-	public void setBranchId(int branchId) {
+	public void setBranchId(Integer branchId) {
 		this.branchId = branchId;
 	}
 

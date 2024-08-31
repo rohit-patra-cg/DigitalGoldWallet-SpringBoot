@@ -23,7 +23,7 @@ public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int userId;
+	private Integer userId;
 
 	@Email(message = "Email should be valid")
 	@NotBlank(message = "Email is mandatory")
@@ -46,11 +46,11 @@ public class User {
 	@Column(updatable = false,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt = LocalDateTime.now();
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
