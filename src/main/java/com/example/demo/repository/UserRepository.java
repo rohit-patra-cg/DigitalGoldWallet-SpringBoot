@@ -12,6 +12,7 @@ import com.example.demo.entity.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
 	Optional<User> findByName(String name);
+	Optional<User> findByEmail(String name);
 	
 	@Query("FROM User u WHERE u.address.city=:city")
 	List<User> findAllByCity(String city);

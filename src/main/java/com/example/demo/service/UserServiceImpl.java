@@ -6,12 +6,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.PostResponse;
+import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.SuccessResponse;
+import com.example.demo.entity.Address;
 import com.example.demo.entity.Payment;
 import com.example.demo.entity.PhysicalGoldTransaction;
 import com.example.demo.entity.TransactionHistory;
 import com.example.demo.entity.User;
 import com.example.demo.entity.VirtualGoldHolding;
+import com.example.demo.exception.AddressNotFoundException;
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.PaymentRepository;
@@ -27,6 +30,9 @@ public class UserServiceImpl implements UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
+	private AddressService addressService;
+	
+	@Autowired
 	private VirtualGoldHoldingRepository virtualGoldHoldingRepository;
 
 	@Autowired
@@ -34,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private TransactionHistoryRepository transactionHistoryRepository;
-	
+
 	@Autowired
 	private PaymentRepository paymentRepository;
 
@@ -97,12 +103,47 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PostResponse createUser(User user) throws UserAlreadyExistsException {
-		if (userRepository.findByName(user.getName()).isEmpty()) {
+	public SuccessResponse createUser(UserDTO userDto) throws UserAlreadyExistsException, AddressNotFoundException {
+		if (userRepository.findByEmail(userDto.getEmail()).isEmpty()) {
+			Address address = addressService.getAddressByAddressId(userDto.getAddressId());
+			User user = new User();
+			user.setName(userDto.getName());
+			user.setEmail(userDto.getEmail());
+			user.setBalance(userDto.getBalance());
+			user.setAddress(address);
 			userRepository.save(user);
-			return new PostResponse(new Date(), "User details added successfully.");
+			return new SuccessResponse(new Date(), "User details added successfully");
 		}
-		throw new UserAlreadyExistsException("User already exists.");
+		throw new UserAlreadyExistsException("User already exists");
+	}
+
+	@Override
+	public SuccessResponse updateUser(int userId, UserDTO userDto) throws UserNotFoundException, AddressNotFoundException {
+		Address address = addressService.getAddressByAddressId(userDto.getAddressId());
+		User user = getUserByUserId(userId);
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setBalance(userDto.getBalance());
+		user.setAddress(address);
+		userRepository.save(user);
+		return new SuccessResponse(new Date(), "User details updated successfully");
+	}
+
+	@Override
+	public SuccessResponse updateUserBalance(int userId, double newBalance) throws UserNotFoundException {
+		User user = getUserByUserId(userId);
+		user.setBalance(newBalance);
+		userRepository.save(user);
+		return new SuccessResponse(new Date(), "User balance updated successfully");
+	}
+
+	@Override
+	public SuccessResponse updateUserAddress(int userId, int addressId) throws UserNotFoundException, AddressNotFoundException {
+		User user = getUserByUserId(userId);
+		Address address = addressService.getAddressByAddressId(addressId);
+		user.setAddress(address);
+		userRepository.save(user);
+		return new SuccessResponse(new Date(), "User address updated successfully");
 	}
 
 }

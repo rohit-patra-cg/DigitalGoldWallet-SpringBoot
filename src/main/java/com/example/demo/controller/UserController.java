@@ -8,19 +8,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.dto.PostResponse;
+import com.example.demo.dto.SuccessResponse;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Payment;
 import com.example.demo.entity.PhysicalGoldTransaction;
 import com.example.demo.entity.TransactionHistory;
 import com.example.demo.entity.User;
 import com.example.demo.entity.VirtualGoldHolding;
+import com.example.demo.exception.AddressNotFoundException;
+import com.example.demo.exception.InvalidBalanceException;
 import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.UserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -80,7 +86,24 @@ public class UserController {
 	}
 	
 	@PostMapping("/add")
-	ResponseEntity<PostResponse> createUser(@RequestBody User user) throws UserAlreadyExistsException {
-		return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(user));
+	ResponseEntity<SuccessResponse> createUser(@Valid @RequestBody UserDTO userDto) throws UserAlreadyExistsException, AddressNotFoundException {
+		return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDto));
+	}
+	
+	@PutMapping("/update/{user_id}")
+	ResponseEntity<SuccessResponse> updateUser(@PathVariable("user_id") int userId, @Valid @RequestBody UserDTO userDto) throws AddressNotFoundException, UserNotFoundException {
+		return ResponseEntity.ok(userService.updateUser(userId, userDto));
+	}
+	
+	@PutMapping("/{user_id}/update_balance/{amount}")
+	ResponseEntity<SuccessResponse> updateUserBalance(@PathVariable("user_id") int userId, @PathVariable("amount") double amount) throws UserNotFoundException, InvalidBalanceException {
+		if (amount < 0)
+			throw new InvalidBalanceException("Amount must be equal to or higher than 0");
+		return ResponseEntity.ok(userService.updateUserBalance(userId, amount));
+	}
+	
+	@PutMapping("{user_id}/update_address/{address_id}")
+	ResponseEntity<SuccessResponse> updateUserAddress(@PathVariable("user_id") int userId, @PathVariable("address_id") int addressId) throws UserNotFoundException, AddressNotFoundException {
+		return ResponseEntity.ok(userService.updateUserAddress(userId, addressId));
 	}
 }
