@@ -1,6 +1,8 @@
 package com.example.demo.service;
+
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,49 +15,49 @@ import com.example.demo.repository.VendorRepository;
 @Service
 public class VendorServiceImpl implements VendorService {
 
-    @Autowired
-    private VendorRepository vendorRepository;
+	@Autowired
+	private VendorRepository vendorRepository;
 
-    @Override
-    public List<Vendor> getAllVendors() {
-        return vendorRepository.findAll();
-    }
+	@Override
+	public List<Vendor> getAllVendors() {
+		return vendorRepository.findAll();
+	}
 
-    @Override
-    public Vendor getVendorById(int id) throws VendorNotFoundException {
-        return vendorRepository.findById(id)
-                .orElseThrow(() -> new VendorNotFoundException("Vendor#" + id + " not found."));
-    }
+	@Override
+	public Vendor getVendorById(int id) throws VendorNotFoundException {
+		return vendorRepository.findById(id)
+				.orElseThrow(() -> new VendorNotFoundException("Vendor#" + id + " not found."));
+	}
 
-    @Override
-    public Vendor getVendorByName(String name) throws VendorNotFoundException {
-        return vendorRepository.findByVendorName(name)
-                .orElseThrow(() -> new VendorNotFoundException("Vendor with name " + name + " not found."));
-    }
+	@Override
+	public Vendor getVendorByName(String name) throws VendorNotFoundException {
+		return vendorRepository.findByVendorName(name)
+				.orElseThrow(() -> new VendorNotFoundException("Vendor with name " + name + " not found."));
+	}
 
-    @Override
-    public SuccessResponse addVendor(Vendor vendor) throws  VendorAlreadyExistsException {
-        vendorRepository.save(vendor);
-        return new SuccessResponse(new Date(), "Vendor details added successfully");
-    }
+	@Override
+	public SuccessResponse addVendor(Vendor vendor) throws VendorAlreadyExistsException {
+		if (vendorRepository.findByContactEmail(vendor.getContactEmail()).isEmpty()) {
+			vendorRepository.save(vendor);
+			return new SuccessResponse(new Date(), "Vendor details added successfully");
+		}
+		throw new VendorAlreadyExistsException("Vendor Already Exists");
+	}
 
-    @Override
-    public Vendor updateVendor(int id, Vendor updatedVendor) throws VendorNotFoundException {
-        Vendor vendor = getVendorById(id);
-        vendor.setVendorName(updatedVendor.getVendorName()); 
-        vendor.setDescription(updatedVendor.getDescription());
-        vendor.setContactPersonName(updatedVendor.getContactPersonName());
-        vendor.setContactEmail(updatedVendor.getContactEmail());
-        vendor.setContactPhone(updatedVendor.getContactPhone());
-        vendor.setWebsiteUrl(updatedVendor.getWebsiteUrl());
-        vendor.setTotalGoldQuantity(updatedVendor.getTotalGoldQuantity());
-        vendor.setCurrentGoldPrice(updatedVendor.getCurrentGoldPrice());
-        return vendorRepository.save(vendor);
-    }
+	@Override
+	public Vendor updateVendor(int id, Vendor updatedVendor) throws VendorNotFoundException {
+		// TODO to be implemented
+//		Vendor vendor = getVendorById(id);
+//		vendor.setVendorName(updatedVendor.getVendorName());
+//		vendor.setDescription(updatedVendor.getDescription());
+//		vendor.setContactPersonName(updatedVendor.getContactPersonName());
+//		vendor.setContactEmail(updatedVendor.getContactEmail());
+//		vendor.setContactPhone(updatedVendor.getContactPhone());
+//		vendor.setWebsiteUrl(updatedVendor.getWebsiteUrl());
+//		vendor.setTotalGoldQuantity(updatedVendor.getTotalGoldQuantity());
+//		vendor.setCurrentGoldPrice(updatedVendor.getCurrentGoldPrice());
+//		return vendorRepository.save(vendor);
+		return null;
+	}
 
-    @Override
-    public void deleteVendor(int id) throws VendorNotFoundException {
-        Vendor vendor = getVendorById(id);
-        vendorRepository.delete(vendor);
-    }
 }

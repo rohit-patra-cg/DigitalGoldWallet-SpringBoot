@@ -31,6 +31,7 @@ public class Vendor {
 	@Size(max = 100, message = "Contact person name can't be longer than 100 characters")
 	private String contactPersonName;
 
+	@Column(unique = true)
 	@Email(message = "Contact email should be valid")
 	@Size(max = 100, message = "Contact email can't be longer than 100 characters")
 	private String contactEmail;

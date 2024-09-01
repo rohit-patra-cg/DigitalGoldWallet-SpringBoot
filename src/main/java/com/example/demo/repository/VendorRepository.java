@@ -11,4 +11,6 @@ import com.example.demo.entity.Vendor;
 public interface VendorRepository extends JpaRepository<Vendor, Integer> {
 
 	Optional<Vendor> findByVendorName(String name);
+
+	Optional<Vendor> findByContactEmail(String email);
 }

@@ -46,4 +46,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ValidationErrorDetails> handleValidationException(MethodArgumentNotValidException ex, WebRequest request) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), ex.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList())));
 	}
+	
+	@ExceptionHandler(VendorAlreadyExistsException.class)
+	public ResponseEntity<ErrorDetails> handleVendorAlreadyExistsException(VendorAlreadyExistsException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	}
 }
