@@ -13,4 +13,13 @@ public interface PhysicalGoldTransactionRepository extends JpaRepository<Physica
 	
 	@Query("FROM PhysicalGoldTransaction p WHERE p.user.userId = :userId")
 	List<PhysicalGoldTransaction> findAllPhysicalGoldTransactionsByUserId(int userId);
+	
+	@Query("FROM PhysicalGoldTransaction p WHERE p.branch.branchId = :branchId")
+	List<PhysicalGoldTransaction> findAllPhysicalGoldTransactionsByBranchId(int branchId);
+	
+	@Query("FROM PhysicalGoldTransaction p WHERE p.deliveryAddress.city = :city")
+	List<PhysicalGoldTransaction> findAllPhysicalGoldTransactionsByCity(String city);
+	
+	@Query("FROM PhysicalGoldTransaction p WHERE p.deliveryAddress.state = :state")
+	List<PhysicalGoldTransaction> findAllPhysicalGoldTransactionsByState(String state);
 }
