@@ -13,5 +13,8 @@ public interface VirtualGoldHoldingRepository extends JpaRepository<VirtualGoldH
 
 	@Query("FROM VirtualGoldHolding v WHERE v.user.userId = :userId")
 	List<VirtualGoldHolding> findAllVirtualGoldHoldingByUserId(int userId);
+	
+	@Query("FROM VirtualGoldHolding v WHERE v.user.userId = :userId AND v.branch.vendor.vendorId = :vendorId")
+	List<VirtualGoldHolding> findAllVirtualGoldHoldingByUserIdAndVendorId(int userId, int vendorId);
 
 }

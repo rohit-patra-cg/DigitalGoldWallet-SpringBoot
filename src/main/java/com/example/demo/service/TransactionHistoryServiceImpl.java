@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.TransactionHistory;
+import com.example.demo.enums.TransactionStatus;
+import com.example.demo.enums.TxnHistoryTransactionType;
 import com.example.demo.exception.TransactionHistoryNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.TransactionHistoryRepository;
@@ -36,5 +38,15 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 			throws UserNotFoundException {
 		userService.getUserByUserId(userId);
 		return transactionHistoryRepository.findAllByUserId(userId);
+	}
+
+	@Override
+	public List<TransactionHistory> getTransactionHistoryByTransactionStatus(TransactionStatus transactionStatus) {
+		return transactionHistoryRepository.findAllByTransactionStatus(transactionStatus);
+	}
+
+	@Override
+	public List<TransactionHistory> getTransactionHistoryByTransactionType(TxnHistoryTransactionType transactionType) {
+		return transactionHistoryRepository.findAllByTransactionType(transactionType);
 	}
 }

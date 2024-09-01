@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.demo.entity.TransactionHistory;
+import com.example.demo.enums.TransactionStatus;
+import com.example.demo.enums.TxnHistoryTransactionType;
 
 @Repository
 public interface TransactionHistoryRepository extends JpaRepository<TransactionHistory, Integer> {
@@ -15,4 +17,8 @@ public interface TransactionHistoryRepository extends JpaRepository<TransactionH
 
 	@Query("FROM TransactionHistory th WHERE th.branch.branchId = :branchId")
 	List<TransactionHistory> findAllByBranchId(int branchId);
+	
+	List<TransactionHistory> findAllByTransactionStatus(TransactionStatus transactionStatus);
+	
+	List<TransactionHistory> findAllByTransactionType(TxnHistoryTransactionType transactionType);
 }

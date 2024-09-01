@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import com.example.demo.enums.PaymentMethod;
 import com.example.demo.enums.PaymentStatus;
 import com.example.demo.enums.PaymentTransactionType;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +28,6 @@ public class Payment {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	@JsonIgnore
 	private User user;
 
 	@DecimalMin(value = "0.0", inclusive = true, message = "Amount must be positive")

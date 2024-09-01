@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.TransactionHistory;
+import com.example.demo.enums.TransactionStatus;
+import com.example.demo.enums.TxnHistoryTransactionType;
 import com.example.demo.exception.TransactionHistoryNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.TransactionHistoryService;
@@ -35,5 +37,19 @@ public class TransactionHistoryController {
 	ResponseEntity<List<TransactionHistory>> getTransactionHistoryByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
 		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByUserId(userId));
 	}
-
+	
+	@GetMapping("/successful")
+	ResponseEntity<List<TransactionHistory>> getAllSuccessfulTransactionHistories() {
+		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByTransactionStatus(TransactionStatus.SUCCESS));
+	}
+	
+	@GetMapping("/failed")
+	ResponseEntity<List<TransactionHistory>> getAllFailedTransactionHistories() {
+		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByTransactionStatus(TransactionStatus.FAILED));
+	}
+	
+	@GetMapping("/by_type/{transaction_type}")
+	ResponseEntity<List<TransactionHistory>> getAllTransactionHistoriesByTransactionType(@PathVariable("transaction_type") TxnHistoryTransactionType transactionType) throws UserNotFoundException {
+		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByTransactionType(transactionType));
+	}
 }
