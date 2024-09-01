@@ -11,4 +11,5 @@ public interface TransactionHistoryService {
 	List<TransactionHistory> getAllTransactionHistory();
 	TransactionHistory getTransactionHistoryByTransactionHistoryId(int TransactionHistoryId) throws TransactionHistoryNotFoundException;
 	List<TransactionHistory> getTransactionHistoryByUserId(int userId) throws UserNotFoundException;
+	
 }

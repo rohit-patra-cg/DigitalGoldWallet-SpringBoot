@@ -12,4 +12,7 @@ import com.example.demo.entity.TransactionHistory;
 public interface TransactionHistoryRepository extends JpaRepository<TransactionHistory, Integer> {
 	@Query("FROM TransactionHistory th WHERE th.user.userId = :userId")
 	List<TransactionHistory> findAllByUserId(int userId);
+
+	@Query("FROM TransactionHistory th WHERE th.branch.branchId = :branchId")
+	List<TransactionHistory> findAllByBranchId(int branchId);
 }

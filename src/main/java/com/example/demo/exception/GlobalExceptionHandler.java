@@ -51,4 +51,9 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ErrorDetails> handleVendorAlreadyExistsException(VendorAlreadyExistsException ex, WebRequest request) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
+	
+	@ExceptionHandler(VendorBranchNotFoundException.class)
+	public ResponseEntity<ErrorDetails> handleVendorBranchNotFoundException(VendorBranchNotFoundException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	}
 }
