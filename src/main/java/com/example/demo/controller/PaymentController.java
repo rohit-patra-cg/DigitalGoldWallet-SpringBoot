@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +26,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/payments")
 public class PaymentController {
 
-	@Autowired
 	private PaymentService paymentService;
 	
+	public PaymentController(PaymentService paymentService) {
+		this.paymentService = paymentService;
+	}
+
 	@GetMapping
 	ResponseEntity<List<Payment>> getAllPayments() {
 		return ResponseEntity.ok(paymentService.getAllPayments());

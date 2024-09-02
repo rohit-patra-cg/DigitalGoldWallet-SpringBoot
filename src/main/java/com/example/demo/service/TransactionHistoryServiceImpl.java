@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.SuccessResponse;
@@ -22,14 +21,18 @@ import com.example.demo.repository.TransactionHistoryRepository;
 @Service
 public class TransactionHistoryServiceImpl implements TransactionHistoryService {
 
-	@Autowired
-	private TransactionHistoryRepository transactionHistoryRepository;
-	
-	@Autowired
+    private TransactionHistoryRepository transactionHistoryRepository;
+    
 	private UserService userService;
 	
-	@Autowired
 	private VendorBranchService vendorBranchService;
+	
+	public TransactionHistoryServiceImpl(TransactionHistoryRepository transactionHistoryRepository,
+			UserService userService, VendorBranchService vendorBranchService) {
+		this.transactionHistoryRepository = transactionHistoryRepository;
+		this.userService = userService;
+		this.vendorBranchService = vendorBranchService;
+	}
 
 	@Override
 	public List<TransactionHistory> getAllTransactionHistory() {

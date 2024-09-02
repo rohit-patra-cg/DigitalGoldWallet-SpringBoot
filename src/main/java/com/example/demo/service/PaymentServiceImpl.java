@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.PaymentDTO;
@@ -19,12 +18,15 @@ import com.example.demo.repository.PaymentRepository;
 @Service
 public class PaymentServiceImpl implements PaymentService {
 
-	@Autowired
 	private PaymentRepository paymentRepository;
 	
-	@Autowired
 	private UserService userService;
 	
+	public PaymentServiceImpl(PaymentRepository paymentRepository, UserService userService) {
+		this.paymentRepository = paymentRepository;
+		this.userService = userService;
+	}
+
 	@Override
 	public List<Payment> getAllPayments() {
 		return paymentRepository.findAll();
