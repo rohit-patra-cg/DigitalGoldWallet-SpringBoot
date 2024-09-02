@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.SuccessResponse;
 import com.example.demo.dto.VirtualGoldHoldingDTO;
 import com.example.demo.entity.VirtualGoldHolding;
+import com.example.demo.exception.InvalidGoldQuantityException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.exception.VendorBranchNotFoundException;
 import com.example.demo.exception.VendorNotFoundException;
@@ -63,4 +64,10 @@ public class VirtualGoldHoldingController {
 	ResponseEntity<SuccessResponse> updateVirtualGoldHolding(@PathVariable("holding_id") int holdingId, @Valid @RequestBody VirtualGoldHoldingDTO holdingDto) throws VirtualGoldHoldingNotFoundException,UserNotFoundException, VendorBranchNotFoundException{
 		return ResponseEntity.ok(virtualGoldHoldingService.updateVirtualGoldHolding(holdingId, holdingDto));
 	}
+	
+	@PostMapping("/convertToPhysical/{holding_id}/{quantity}")
+	ResponseEntity<SuccessResponse> convertToPysical(@PathVariable("quantity") double quantity, @PathVariable("holding_id")int holdingId ) throws VirtualGoldHoldingNotFoundException, UserNotFoundException, VendorBranchNotFoundException, InvalidGoldQuantityException{
+		return ResponseEntity.ok(virtualGoldHoldingService.convertToPysical(quantity, holdingId));
+	}
+	
 }

@@ -28,7 +28,7 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 	private VendorBranchService vendorBranchService;
 	
 	public TransactionHistoryServiceImpl(TransactionHistoryRepository transactionHistoryRepository,
-			UserService userService, VendorBranchService vendorBranchService) {
+		UserService userService, VendorBranchService vendorBranchService) {
 		this.transactionHistoryRepository = transactionHistoryRepository;
 		this.userService = userService;
 		this.vendorBranchService = vendorBranchService;
