@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
 import com.example.demo.dto.ErrorDetails;
 import com.example.demo.dto.ValidationErrorDetails;
@@ -16,72 +15,38 @@ import com.example.demo.dto.ValidationErrorDetails;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<ErrorDetails> handleCustomerNotFoundException(UserNotFoundException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<ValidationErrorDetails> handleValidationException(MethodArgumentNotValidException ex) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), ex.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList())));
 	}
 	
-	@ExceptionHandler(UserAlreadyExistsException.class)
-	public ResponseEntity<ErrorDetails> handleUserAlreadyExistsException(UserAlreadyExistsException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotFoundException ex) {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
-	@ExceptionHandler(AddressNotFoundException.class)
-	public ResponseEntity<ErrorDetails> handleAddressNotFoundException(AddressNotFoundException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
-	}
-	
-	@ExceptionHandler(TransactionHistoryNotFoundException.class)
-	public ResponseEntity<ErrorDetails> handleTransactionHistoryNotFoundException(TransactionHistoryNotFoundException ex, WebRequest request) {
+	@ExceptionHandler(ResourceAlreadyExistsException.class)
+	public ResponseEntity<ErrorDetails> handleUserAlreadyExistsException(ResourceAlreadyExistsException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 
 	@ExceptionHandler(InvalidBalanceException.class)
-	public ResponseEntity<ErrorDetails> handleInvalidBalanceException(InvalidBalanceException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
-	}
-	
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ValidationErrorDetails> handleValidationException(MethodArgumentNotValidException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), ex.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList())));
-	}
-	@ExceptionHandler(VendorNotFoundException.class)
-	public ResponseEntity<ErrorDetails> handleVendorNotFoundException(VendorNotFoundException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
-	}
-	
-	@ExceptionHandler(VendorAlreadyExistsException.class)
-	public ResponseEntity<ErrorDetails> handleVendorAlreadyExistsException(VendorAlreadyExistsException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
-	}
-	
-	@ExceptionHandler(VendorBranchNotFoundException.class)
-	public ResponseEntity<ErrorDetails> handleVendorBranchNotFoundException(VendorBranchNotFoundException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
-	}
-	
-	@ExceptionHandler(VirtualGoldHoldingNotFoundException.class)
-	public ResponseEntity<ErrorDetails> handleVirtualGoldHoldingNotFoundException(VirtualGoldHoldingNotFoundException ex, WebRequest request) {
+	public ResponseEntity<ErrorDetails> handleInvalidBalanceException(InvalidBalanceException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
 	@ExceptionHandler(InvalidGoldPriceException.class)
-	public ResponseEntity<ErrorDetails> handleInvalidGoldPriceException(InvalidGoldPriceException ex, WebRequest request) {
+	public ResponseEntity<ErrorDetails> handleInvalidGoldPriceException(InvalidGoldPriceException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
 	@ExceptionHandler(InvalidGoldQuantityException.class)
-	public ResponseEntity<ErrorDetails> handleInvalidGoldQuantityException(InvalidGoldQuantityException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
-	}
-	
-	@ExceptionHandler(VirtualGoldHoldingAreadyExistsException.class)
-	public ResponseEntity<ErrorDetails> handleVirtualGoldHoldingAreadyExistsException(VirtualGoldHoldingAreadyExistsException ex, WebRequest request) {
+	public ResponseEntity<ErrorDetails> handleInvalidGoldQuantityException(InvalidGoldQuantityException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
 	@ExceptionHandler(InvalidAmountException.class)
-	public ResponseEntity<ErrorDetails> handleInvalidAmountException(InvalidAmountException ex, WebRequest request) {
+	public ResponseEntity<ErrorDetails> handleInvalidAmountException(InvalidAmountException ex) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 }

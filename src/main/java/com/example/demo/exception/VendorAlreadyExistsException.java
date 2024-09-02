@@ -1,7 +1,8 @@
 package com.example.demo.exception;
 
+public class VendorAlreadyExistsException extends ResourceAlreadyExistsException {
 
-public class VendorAlreadyExistsException extends Exception {
+	private static final long serialVersionUID = 4892862399242161958L;
 
 	public VendorAlreadyExistsException(String message) {
 		super(message);

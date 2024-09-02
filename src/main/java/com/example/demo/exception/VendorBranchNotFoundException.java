@@ -1,9 +1,10 @@
 package com.example.demo.exception;
 
-public class VendorBranchNotFoundException extends Exception{
+public class VendorBranchNotFoundException extends ResourceNotFoundException {
 
-	    public VendorBranchNotFoundException(String message) {
-	        super(message);
-	    }
+	private static final long serialVersionUID = -996322167957239192L;
+
+	public VendorBranchNotFoundException(String message) {
+		super(message);
 	}
-	
+}

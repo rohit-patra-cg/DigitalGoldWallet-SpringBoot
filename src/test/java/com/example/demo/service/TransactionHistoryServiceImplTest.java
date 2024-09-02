@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
-public class TransactionHistoryServiceImplTest {
+class TransactionHistoryServiceImplTest {
 
 	@Mock
 	private TransactionHistoryRepository transactionHistoryRepository;
@@ -67,7 +67,7 @@ public class TransactionHistoryServiceImplTest {
 	
 
     @Test
-    public void testGetTransactionHistoryByTransactionStatus_WhenTransactionStatusisSuccess() {
+    void testGetTransactionHistoryByTransactionStatus_WhenTransactionStatusisSuccess() {
         TransactionStatus status = TransactionStatus.SUCCESS;
         TransactionHistory transaction = new TransactionHistory();
         transaction.setTransactionId(1);
@@ -82,7 +82,7 @@ public class TransactionHistoryServiceImplTest {
     }
     
     @Test
-    public void testGetTransactionHistoryByTransactionStatus__WhenTransactionStatusisFailed() {
+    void testGetTransactionHistoryByTransactionStatus__WhenTransactionStatusisFailed() {
         TransactionStatus status = TransactionStatus.FAILED;
         TransactionHistory transaction = new TransactionHistory();
         transaction.setTransactionId(1);
@@ -97,7 +97,7 @@ public class TransactionHistoryServiceImplTest {
     }
     
     @Test
-    public void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisBuy(){
+    void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisBuy(){
         TxnHistoryTransactionType type = TxnHistoryTransactionType.BUY;
         TransactionHistory transaction = new TransactionHistory();
         transaction.setTransactionId(1);
@@ -112,7 +112,7 @@ public class TransactionHistoryServiceImplTest {
     }
     
     @Test
-    public void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisSell(){
+    void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisSell(){
         TxnHistoryTransactionType type = TxnHistoryTransactionType.SELL;
         TransactionHistory transaction = new TransactionHistory();
         transaction.setTransactionId(1);

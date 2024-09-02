@@ -13,7 +13,6 @@ import com.example.demo.entity.VendorBranch;
 import com.example.demo.enums.TransactionStatus;
 import com.example.demo.enums.TxnHistoryTransactionType;
 import com.example.demo.exception.TransactionHistoryNotFoundException;
-import com.example.demo.exception.TransactionTypeNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.exception.VendorBranchNotFoundException;
 import com.example.demo.repository.TransactionHistoryRepository;
@@ -65,7 +64,7 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 	
 	@Override
 	public SuccessResponse createTransaction(TransactionHistoryDTO transactionHistoryDto)
-			throws TransactionTypeNotFoundException, UserNotFoundException, VendorBranchNotFoundException {
+			throws UserNotFoundException, VendorBranchNotFoundException {
 		User user = userService.getUserByUserId(transactionHistoryDto.getUserId());
 		VendorBranch branch = vendorBranchService.getVendorBranchByBranchId(transactionHistoryDto.getBranchId());
 		TransactionHistory transactionHistory = new TransactionHistory();
