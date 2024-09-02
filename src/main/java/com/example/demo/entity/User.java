@@ -42,6 +42,18 @@ public class User {
 
 	@Column(updatable = false,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt = LocalDateTime.now();
+	
+	public User() {
+	}
+
+	public User(Integer userId, String email, String name, Address address, Double balance, LocalDateTime createdAt) {
+		this.userId = userId;
+		this.email = email;
+		this.name = name;
+		this.address = address;
+		this.balance = balance;
+		this.createdAt = createdAt;
+	}
 
 	public Integer getUserId() {
 		return userId;

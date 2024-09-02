@@ -26,17 +26,17 @@ import com.example.demo.repository.VirtualGoldHoldingRepository;
 public class UserServiceImpl implements UserService {
 
 	private UserRepository userRepository;
-	
+
 	private AddressService addressService;
-	
+
 	private VirtualGoldHoldingRepository virtualGoldHoldingRepository;
 
 	private PhysicalGoldTransactionRepository physicalGoldTransactionRepository;
-	
+
 	private TransactionHistoryRepository transactionHistoryRepository;
 
 	private PaymentRepository paymentRepository;
-	
+
 	public UserServiceImpl(UserRepository userRepository, AddressService addressService,
 			VirtualGoldHoldingRepository virtualGoldHoldingRepository,
 			PhysicalGoldTransactionRepository physicalGoldTransactionRepository,
@@ -123,7 +123,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public SuccessResponse updateUser(int userId, UserDTO userDto) throws UserNotFoundException, AddressNotFoundException {
+	public SuccessResponse updateUser(int userId, UserDTO userDto)
+			throws UserNotFoundException, AddressNotFoundException {
 		Address address = addressService.getAddressByAddressId(userDto.getAddressId());
 		User user = getUserByUserId(userId);
 		user.setName(userDto.getName());
@@ -143,7 +144,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public SuccessResponse updateUserAddress(int userId, int addressId) throws UserNotFoundException, AddressNotFoundException {
+	public SuccessResponse updateUserAddress(int userId, int addressId)
+			throws UserNotFoundException, AddressNotFoundException {
 		User user = getUserByUserId(userId);
 		Address address = addressService.getAddressByAddressId(addressId);
 		user.setAddress(address);
