@@ -75,4 +75,11 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ValidationErrorDetails> handleInvalidGoldQuantityException(InvalidGoldQuantityException ex, WebRequest request) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), Arrays.asList(ex.getMessage())));
 	}
+	
+	@ExceptionHandler(VirtualGoldHoldingAreadyExistsException.class)
+	public ResponseEntity<ErrorDetails> handleVirtualGoldHoldingAreadyExistsException(VirtualGoldHoldingAreadyExistsException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	}
+	
+	
 }
