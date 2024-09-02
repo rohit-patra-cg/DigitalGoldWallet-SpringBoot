@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.PhysicalGoldTransactionDTO;
@@ -21,17 +20,21 @@ import com.example.demo.repository.PhysicalGoldTransactionRepository;
 @Service
 public class PhysicalGoldTransactionServiceImpl implements PhysicalGoldTransactionService {
 
-	@Autowired
 	private PhysicalGoldTransactionRepository physicalGoldTransactionRepository;
 	
-	@Autowired
 	private UserService userService;
 
-	@Autowired
 	private AddressService addressService;
 	
-	@Autowired
 	private VendorBranchService vendorBranchService;
+	
+	public PhysicalGoldTransactionServiceImpl(PhysicalGoldTransactionRepository physicalGoldTransactionRepository,
+			UserService userService, AddressService addressService, VendorBranchService vendorBranchService) {
+		this.physicalGoldTransactionRepository = physicalGoldTransactionRepository;
+		this.userService = userService;
+		this.addressService = addressService;
+		this.vendorBranchService = vendorBranchService;
+	}
 
 	@Override
 	public List<PhysicalGoldTransaction> getAllPhysicalGoldTransactions() {
