@@ -1,6 +1,5 @@
 package com.example.demo.exception;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
 
@@ -38,8 +37,8 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(InvalidBalanceException.class)
-	public ResponseEntity<ValidationErrorDetails> handleInvalidBalanceException(InvalidBalanceException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), Arrays.asList(ex.getMessage())));
+	public ResponseEntity<ErrorDetails> handleInvalidBalanceException(InvalidBalanceException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -67,13 +66,13 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(InvalidGoldPriceException.class)
-	public ResponseEntity<ValidationErrorDetails> handleInvalidGoldPriceException(InvalidGoldPriceException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), Arrays.asList(ex.getMessage())));
+	public ResponseEntity<ErrorDetails> handleInvalidGoldPriceException(InvalidGoldPriceException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
 	@ExceptionHandler(InvalidGoldQuantityException.class)
-	public ResponseEntity<ValidationErrorDetails> handleInvalidGoldQuantityException(InvalidGoldQuantityException ex, WebRequest request) {
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), Arrays.asList(ex.getMessage())));
+	public ResponseEntity<ErrorDetails> handleInvalidGoldQuantityException(InvalidGoldQuantityException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
 	@ExceptionHandler(VirtualGoldHoldingAreadyExistsException.class)
@@ -81,5 +80,8 @@ public class GlobalExceptionHandler {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
 	}
 	
-	
+	@ExceptionHandler(InvalidAmountException.class)
+	public ResponseEntity<ErrorDetails> handleInvalidAmountException(InvalidAmountException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	}
 }
