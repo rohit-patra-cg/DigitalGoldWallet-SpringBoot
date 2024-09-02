@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.SuccessResponse;
@@ -14,8 +13,11 @@ import com.example.demo.repository.AddressRepository;
 @Service
 public class AddressServiceImpl implements AddressService {
 
-	@Autowired
 	private AddressRepository addressRepository;
+
+	public AddressServiceImpl(AddressRepository addressRepository) {
+		this.addressRepository = addressRepository;
+	}
 
 	@Override
 	public List<Address> getAllAddresses() {

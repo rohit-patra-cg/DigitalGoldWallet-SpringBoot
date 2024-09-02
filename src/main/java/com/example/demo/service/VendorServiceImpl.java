@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.SuccessResponse;
@@ -14,9 +13,12 @@ import com.example.demo.repository.VendorRepository;
 
 @Service
 public class VendorServiceImpl implements VendorService {
-
-	@Autowired
+	
 	private VendorRepository vendorRepository;
+
+	public VendorServiceImpl(VendorRepository vendorRepository) {
+		this.vendorRepository = vendorRepository;
+	}
 
 	@Override
 	public List<Vendor> getAllVendors() {

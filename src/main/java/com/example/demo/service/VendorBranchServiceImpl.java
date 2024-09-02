@@ -3,7 +3,6 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.SuccessResponse;
@@ -20,17 +19,22 @@ import com.example.demo.repository.VendorBranchRepository;
 @Service
 public class VendorBranchServiceImpl implements VendorBranchService {
 
-	@Autowired
 	private VendorBranchRepository vendorBranchRepository;
 
-	@Autowired
 	private TransactionHistoryRepository transactionHistoryRepository;
 	
-	@Autowired
 	private AddressService addressService;
 	
-	@Autowired
 	private VendorService vendorService;
+
+	public VendorBranchServiceImpl(VendorBranchRepository vendorBranchRepository,
+			TransactionHistoryRepository transactionHistoryRepository, AddressService addressService,
+			VendorService vendorService) {
+		this.vendorBranchRepository = vendorBranchRepository;
+		this.transactionHistoryRepository = transactionHistoryRepository;
+		this.addressService = addressService;
+		this.vendorService = vendorService;
+	}
 
 	@Override
 	public List<VendorBranch> getAllVendorBranches() {

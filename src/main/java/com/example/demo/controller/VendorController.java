@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +26,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/vendor")
 public class VendorController {
 
-	@Autowired
 	private VendorService vendorService;
+
+	public VendorController(VendorService vendorService) {
+		this.vendorService = vendorService;
+	}
 
 	@GetMapping
 	public ResponseEntity<List<Vendor>> getAllVendors() {
