@@ -28,19 +28,15 @@ public class UserDTO {
 		this.balance = balance;
 		this.addressId = addressId;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public Double getBalance() {
 		return balance;
 	}
-
 	public int getAddressId() {
 		return addressId;
 	}
