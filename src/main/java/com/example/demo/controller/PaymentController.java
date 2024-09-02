@@ -16,6 +16,7 @@ import com.example.demo.dto.SuccessResponse;
 import com.example.demo.entity.Payment;
 import com.example.demo.enums.PaymentMethod;
 import com.example.demo.enums.PaymentStatus;
+import com.example.demo.exception.InvalidAmountException;
 import com.example.demo.exception.PaymentNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.PaymentService;
@@ -63,7 +64,7 @@ public class PaymentController {
 	}
 	
 	@PostMapping("/add")
-	ResponseEntity<SuccessResponse> createPayment(@Valid @RequestBody PaymentDTO paymentDTO) throws UserNotFoundException {
+	ResponseEntity<SuccessResponse> createPayment(@Valid @RequestBody PaymentDTO paymentDTO) throws UserNotFoundException, InvalidAmountException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.createPayment(paymentDTO));
 	}
 }

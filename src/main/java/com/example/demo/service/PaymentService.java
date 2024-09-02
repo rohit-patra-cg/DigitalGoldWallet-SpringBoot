@@ -7,6 +7,7 @@ import com.example.demo.dto.SuccessResponse;
 import com.example.demo.entity.Payment;
 import com.example.demo.enums.PaymentMethod;
 import com.example.demo.enums.PaymentStatus;
+import com.example.demo.exception.InvalidAmountException;
 import com.example.demo.exception.PaymentNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 
@@ -16,5 +17,5 @@ public interface PaymentService {
 	List<Payment> getAllPaymentsByUserId(int userId) throws UserNotFoundException;
 	List<Payment> getAllPaymentsByPaymentStatus(PaymentStatus paymentStatus);
 	List<Payment> getAllPaymentsByPaymentMethod(PaymentMethod paymentMethod);
-	SuccessResponse createPayment(PaymentDTO paymentDTO) throws UserNotFoundException;
+	SuccessResponse createPayment(PaymentDTO paymentDTO) throws UserNotFoundException, InvalidAmountException;
 }

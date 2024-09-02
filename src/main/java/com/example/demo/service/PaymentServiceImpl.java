@@ -11,6 +11,8 @@ import com.example.demo.entity.Payment;
 import com.example.demo.entity.User;
 import com.example.demo.enums.PaymentMethod;
 import com.example.demo.enums.PaymentStatus;
+import com.example.demo.enums.PaymentTransactionType;
+import com.example.demo.exception.InvalidAmountException;
 import com.example.demo.exception.PaymentNotFoundException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.PaymentRepository;
@@ -54,8 +56,7 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	@Override
-	public SuccessResponse createPayment(PaymentDTO paymentDTO) throws UserNotFoundException {
-		// TODO: Add money to virtual gold holding if CREDIT and vice versa 
+	public SuccessResponse createPayment(PaymentDTO paymentDTO) throws UserNotFoundException, InvalidAmountException { 
 		User user = userService.getUserByUserId(paymentDTO.getUserId());
 		Payment payment = new Payment();
 		payment.setPaymentMethod(paymentDTO.getPaymentMethod());
@@ -63,6 +64,14 @@ public class PaymentServiceImpl implements PaymentService {
 		payment.setAmount(paymentDTO.getAmount());
 		payment.setTransactionType(paymentDTO.getTransactionType());
 		payment.setUser(user);
+		if (paymentDTO.getTransactionType() == PaymentTransactionType.CREDITED_TO_WALLET) {
+			user.setBalance(user.getBalance() + paymentDTO.getAmount());
+		} else {
+			if (user.getBalance() < paymentDTO.getAmount()) {
+				throw new InvalidAmountException("Amount must be equal to or less than " + user.getBalance());
+			}
+			user.setBalance(user.getBalance() - paymentDTO.getAmount());
+		}
 		paymentRepository.save(payment);
 		return new SuccessResponse(new Date(), "Payment was successful");
 	}

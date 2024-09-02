@@ -6,11 +6,11 @@ import com.example.demo.enums.PaymentTransactionType;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 public class PaymentDTO {
-	@DecimalMin(value = "0.0", inclusive = true, message = "Amount must be positive")
+	@Positive(message = "Amount must be positive")
 	private final Double amount;
 
 	@Enumerated(EnumType.STRING)
