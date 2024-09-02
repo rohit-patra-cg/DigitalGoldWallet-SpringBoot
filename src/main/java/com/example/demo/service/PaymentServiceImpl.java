@@ -72,7 +72,7 @@ public class PaymentServiceImpl implements PaymentService {
 			}
 			user.setBalance(user.getBalance() - paymentDTO.getAmount());
 		}
-		paymentRepository.save(payment);
-		return new SuccessResponse(new Date(), "Payment was successful");
+		Payment savedPayment = paymentRepository.save(payment);
+		return new SuccessResponse(new Date(), "Payment was successful", savedPayment.getPaymentId());
 	}
 }

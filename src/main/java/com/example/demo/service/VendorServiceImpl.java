@@ -40,8 +40,8 @@ public class VendorServiceImpl implements VendorService {
 	@Override
 	public SuccessResponse addVendor(Vendor vendor) throws VendorAlreadyExistsException {
 		if (vendorRepository.findByContactEmail(vendor.getContactEmail()).isEmpty()) {
-			vendorRepository.save(vendor);
-			return new SuccessResponse(new Date(), "Vendor details added successfully");
+			Vendor savedVendor = vendorRepository.save(vendor);
+			return new SuccessResponse(new Date(), "Vendor details added successfully", savedVendor.getVendorId());
 		}
 		throw new VendorAlreadyExistsException("Vendor Already Exists");
 	}
@@ -60,7 +60,7 @@ public class VendorServiceImpl implements VendorService {
 		existingVendor.setTotalGoldQuantity(vendor.getTotalGoldQuantity());
 		existingVendor.setCurrentGoldPrice(vendor.getCurrentGoldPrice());
 		vendorRepository.save(existingVendor);
-		return new SuccessResponse(new Date(), "Vendor details updated successfully");
+		return new SuccessResponse(new Date(), "Vendor details updated successfully", vendorId);
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class VendorServiceImpl implements VendorService {
 		Vendor existingVendor = getVendorById(vendorId);
 		existingVendor.setTotalGoldQuantity(quantity);
 		vendorRepository.save(existingVendor);
-		return new SuccessResponse(new Date(), "Total gold quantity updated successfully");
+		return new SuccessResponse(new Date(), "Total gold quantity updated successfully", vendorId);
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class VendorServiceImpl implements VendorService {
 		Vendor existingVendor = getVendorById(vendorId);
 		existingVendor.setCurrentGoldPrice(newPrice);
 		vendorRepository.save(existingVendor);
-		return new SuccessResponse(new Date(), "Current gold price updated successfully");
+		return new SuccessResponse(new Date(), "Current gold price updated successfully", vendorId);
 	}
 
 }

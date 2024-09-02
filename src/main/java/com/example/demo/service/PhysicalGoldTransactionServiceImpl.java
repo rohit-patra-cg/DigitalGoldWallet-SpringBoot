@@ -78,8 +78,8 @@ public class PhysicalGoldTransactionServiceImpl implements PhysicalGoldTransacti
 		physicalGoldTransaction.setUser(user);
 		physicalGoldTransaction.setDeliveryAddress(address);
 		physicalGoldTransaction.setBranch(branch);
-		physicalGoldTransactionRepository.save(physicalGoldTransaction);
-		return new SuccessResponse(new Date(), "Physical Gold Transaction added successfully");
+		PhysicalGoldTransaction savedTransaction = physicalGoldTransactionRepository.save(physicalGoldTransaction);
+		return new SuccessResponse(new Date(), "Physical Gold Transaction added successfully", savedTransaction.getTransactionId());
 	}
 
 	@Override
@@ -93,6 +93,6 @@ public class PhysicalGoldTransactionServiceImpl implements PhysicalGoldTransacti
 		physicalGoldTransaction.setDeliveryAddress(address);
 		physicalGoldTransaction.setBranch(branch);
 		physicalGoldTransactionRepository.save(physicalGoldTransaction);
-		return new SuccessResponse(new Date(), "Physical Gold Transaction updated successfully");
+		return new SuccessResponse(new Date(), "Physical Gold Transaction updated successfully", transactionId);
 	}
 }
