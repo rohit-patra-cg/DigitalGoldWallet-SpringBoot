@@ -46,6 +46,10 @@ public class GlobalExceptionHandler {
 	public ResponseEntity<ValidationErrorDetails> handleValidationException(MethodArgumentNotValidException ex, WebRequest request) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), ex.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList())));
 	}
+	@ExceptionHandler(VendorNotFoundException.class)
+	public ResponseEntity<ErrorDetails> handleVendorNotFoundException(VendorNotFoundException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	}
 	
 	@ExceptionHandler(VendorAlreadyExistsException.class)
 	public ResponseEntity<ErrorDetails> handleVendorAlreadyExistsException(VendorAlreadyExistsException ex, WebRequest request) {
@@ -60,5 +64,15 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(VirtualGoldHoldingNotFoundException.class)
 	public ResponseEntity<ErrorDetails> handleVirtualGoldHoldingNotFoundException(VirtualGoldHoldingNotFoundException ex, WebRequest request) {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErrorDetails(new Date(), ex.getMessage()));
+	}
+	
+	@ExceptionHandler(InvalidGoldPriceException.class)
+	public ResponseEntity<ValidationErrorDetails> handleInvalidGoldPriceException(InvalidGoldPriceException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), Arrays.asList(ex.getMessage())));
+	}
+	
+	@ExceptionHandler(InvalidGoldQuantityException.class)
+	public ResponseEntity<ValidationErrorDetails> handleInvalidGoldQuantityException(InvalidGoldQuantityException ex, WebRequest request) {
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ValidationErrorDetails(new Date(), Arrays.asList(ex.getMessage())));
 	}
 }

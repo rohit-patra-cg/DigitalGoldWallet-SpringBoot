@@ -45,19 +45,36 @@ public class VendorServiceImpl implements VendorService {
 	}
 
 	@Override
-	public Vendor updateVendor(int id, Vendor updatedVendor) throws VendorNotFoundException {
-		// TODO to be implemented
-//		Vendor vendor = getVendorById(id);
-//		vendor.setVendorName(updatedVendor.getVendorName());
-//		vendor.setDescription(updatedVendor.getDescription());
-//		vendor.setContactPersonName(updatedVendor.getContactPersonName());
-//		vendor.setContactEmail(updatedVendor.getContactEmail());
-//		vendor.setContactPhone(updatedVendor.getContactPhone());
-//		vendor.setWebsiteUrl(updatedVendor.getWebsiteUrl());
-//		vendor.setTotalGoldQuantity(updatedVendor.getTotalGoldQuantity());
-//		vendor.setCurrentGoldPrice(updatedVendor.getCurrentGoldPrice());
-//		return vendorRepository.save(vendor);
-		return null;
+	public SuccessResponse updateVendor(int vendorId, Vendor vendor) throws VendorNotFoundException {
+
+		Vendor existingVendor = vendorRepository.findById(vendorId)
+				.orElseThrow(() -> new VendorNotFoundException("Vendor not found with id: " + vendorId));
+		existingVendor.setVendorName(vendor.getVendorName());
+		existingVendor.setDescription(vendor.getDescription());
+		existingVendor.setContactPersonName(vendor.getContactPersonName());
+		existingVendor.setContactEmail(vendor.getContactEmail());
+		existingVendor.setContactPhone(vendor.getContactPhone());
+		existingVendor.setWebsiteUrl(vendor.getWebsiteUrl());
+		existingVendor.setTotalGoldQuantity(vendor.getTotalGoldQuantity());
+		existingVendor.setCurrentGoldPrice(vendor.getCurrentGoldPrice());
+		vendorRepository.save(existingVendor);
+		return new SuccessResponse(new Date(), "Vendor details updated successfully");
+	}
+
+	@Override
+	public SuccessResponse updateTotalGoldQuantity(int vendorId, Double quantity) throws VendorNotFoundException {
+		Vendor existingVendor = getVendorById(vendorId);
+		existingVendor.setTotalGoldQuantity(quantity);
+		vendorRepository.save(existingVendor);
+		return new SuccessResponse(new Date(), "Total gold quantity updated successfully");
+	}
+
+	@Override
+	public SuccessResponse updateCurrentGoldPrice(int vendorId, Double newPrice) throws VendorNotFoundException {
+		Vendor existingVendor = getVendorById(vendorId);
+		existingVendor.setCurrentGoldPrice(newPrice);
+		vendorRepository.save(existingVendor);
+		return new SuccessResponse(new Date(), "Current gold price updated successfully");
 	}
 
 }

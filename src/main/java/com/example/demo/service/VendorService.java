@@ -14,8 +14,11 @@ public interface VendorService {
 
 	Vendor getVendorByName(String name) throws VendorNotFoundException;
 
-	Vendor updateVendor(int id, Vendor vendor) throws VendorNotFoundException;
-
 	SuccessResponse addVendor(Vendor vendor) throws VendorAlreadyExistsException;
 
+	SuccessResponse updateVendor(int vendorId, Vendor vendor) throws VendorNotFoundException;
+
+	SuccessResponse updateTotalGoldQuantity(int vendorId, Double quantity) throws VendorNotFoundException;
+
+	SuccessResponse updateCurrentGoldPrice(int vendorId, Double newPrice) throws VendorNotFoundException;
 }
