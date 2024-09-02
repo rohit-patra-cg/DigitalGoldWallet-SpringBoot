@@ -31,8 +31,8 @@ public class AddressServiceImpl implements AddressService {
 
 	@Override
 	public SuccessResponse createAddress(Address address) {
-		addressRepository.save(address);
-		return new SuccessResponse(new Date(), "Address added successfully");
+		Address savedAddress = addressRepository.save(address);
+		return new SuccessResponse(new Date(), "Address added successfully", savedAddress.getAddressId());
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class AddressServiceImpl implements AddressService {
 		addressById.setStreet(address.getStreet());
 		addressById.setPostalCode(address.getPostalCode());
 		addressRepository.save(addressById);
-		return new SuccessResponse(new Date(), "Address updated successfully");
+		return new SuccessResponse(new Date(), "Address updated successfully", addressId);
 	}
 
 }

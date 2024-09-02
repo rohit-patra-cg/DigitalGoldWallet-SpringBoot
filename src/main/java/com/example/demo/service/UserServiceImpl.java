@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService {
 			user.setEmail(userDto.getEmail());
 			user.setBalance(userDto.getBalance());
 			user.setAddress(address);
-			userRepository.save(user);
-			return new SuccessResponse(new Date(), "User details added successfully");
+			User savedUser = userRepository.save(user);
+			return new SuccessResponse(new Date(), "User details added successfully", savedUser.getUserId());
 		}
 		throw new UserAlreadyExistsException("User already exists");
 	}
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
 		user.setBalance(userDto.getBalance());
 		user.setAddress(address);
 		userRepository.save(user);
-		return new SuccessResponse(new Date(), "User details updated successfully");
+		return new SuccessResponse(new Date(), "User details updated successfully", userId);
 	}
 
 	@Override
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 		User user = getUserByUserId(userId);
 		user.setBalance(newBalance);
 		userRepository.save(user);
-		return new SuccessResponse(new Date(), "User balance updated successfully");
+		return new SuccessResponse(new Date(), "User balance updated successfully", userId);
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class UserServiceImpl implements UserService {
 		Address address = addressService.getAddressByAddressId(addressId);
 		user.setAddress(address);
 		userRepository.save(user);
-		return new SuccessResponse(new Date(), "User address updated successfully");
+		return new SuccessResponse(new Date(), "User address updated successfully", userId);
 	}
 
 }

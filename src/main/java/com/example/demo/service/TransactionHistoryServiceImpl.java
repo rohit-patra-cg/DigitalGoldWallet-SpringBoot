@@ -75,6 +75,6 @@ public class TransactionHistoryServiceImpl implements TransactionHistoryService 
 		transactionHistory.setQuantity(transactionHistoryDto.getQuantity());
 		transactionHistory.setAmount(transactionHistoryDto.getAmount());
 		transactionHistoryRepository.save(transactionHistory);
-		return new SuccessResponse(new Date(), "transaction was succesful");
+		return new SuccessResponse(new Date(), "transaction was succesful", transactionHistory.getTransactionId());
 	}
 }

@@ -84,8 +84,8 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 		virtualGoldHolding.setBranch(branch);
 		virtualGoldHolding.setUser(user);
 		virtualGoldHolding.setQuantity(holdingDto.getQuantity());
-		virtualGoldHoldingRepository.save(virtualGoldHolding);
-		return new SuccessResponse(new Date(),"Virtual Gold Holding data added successfully");
+		VirtualGoldHolding savedVirtualGoldHolding = virtualGoldHoldingRepository.save(virtualGoldHolding);
+		return new SuccessResponse(new Date(),"Virtual Gold Holding data added successfully", savedVirtualGoldHolding.getHoldingId());
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 		virtualGoldHolding.setUser(user);
 		virtualGoldHolding.setQuantity(holdingDto.getQuantity());
 		virtualGoldHoldingRepository.save(virtualGoldHolding);
-		return new SuccessResponse(new Date(),"Virtual Gold Holding data updated successfully");
+		return new SuccessResponse(new Date(),"Virtual Gold Holding data updated successfully", holdingId);
 	}
 
 	@Override
@@ -131,7 +131,7 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 		transactionHistory.setAmount(quantity * virtualGoldHolding.getBranch().getVendor().getCurrentGoldPrice());
 		transactionHistory.setBranch(virtualGoldHolding.getBranch());
 		transactionHistoryRepository.save(transactionHistory);
-		return new SuccessResponse(new Date(), "Virtual Gold data convert successfully");
+		return new SuccessResponse(new Date(), "Virtual Gold data convert successfully", holdingId);
 	}
 	
 }

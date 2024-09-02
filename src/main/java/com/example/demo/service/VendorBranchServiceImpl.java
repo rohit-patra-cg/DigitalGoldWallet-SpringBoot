@@ -84,8 +84,8 @@ public class VendorBranchServiceImpl implements VendorBranchService {
 		vendorBranch.setVendor(vendorService.getVendorById(branchDTO.getVendorId()));
 		vendorBranch.setAddress(addressService.getAddressByAddressId(branchDTO.getAddressId()));
 		vendorBranch.setQuantity(branchDTO.getQuantity());
-		vendorBranchRepository.save(vendorBranch);
-		return new SuccessResponse(new Date(), "Vendor Branch added successfully");
+		VendorBranch savedBranch = vendorBranchRepository.save(vendorBranch);
+		return new SuccessResponse(new Date(), "Vendor Branch added successfully", savedBranch.getBranchId());
     }
 
     @Override
@@ -99,7 +99,7 @@ public class VendorBranchServiceImpl implements VendorBranchService {
         destinationBranch.setQuantity(destinationBranch.getQuantity() + quantity);
         vendorBranchRepository.save(sourceBranch);
         vendorBranchRepository.save(destinationBranch);
-        return new SuccessResponse(new Date(),"Vendor Branch transfer was successful");
+        return new SuccessResponse(new Date(),"Vendor Branch transfer was successful", sourceBranchId);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class VendorBranchServiceImpl implements VendorBranchService {
         vendorBranch.setAddress(addressService.getAddressByAddressId(vendorBranchDTO.getAddressId()));
         vendorBranch.setVendor(vendorService.getVendorById(vendorBranchDTO.getVendorId()));
         vendorBranchRepository.save(vendorBranch);
-        return new SuccessResponse(new Date(),"Vendor Branch updated successfully");
+        return new SuccessResponse(new Date(),"Vendor Branch updated successfully", branchId);
     }
 
 }
