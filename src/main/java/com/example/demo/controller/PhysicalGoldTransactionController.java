@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +27,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/physical_gold_transactions")
 public class PhysicalGoldTransactionController {
 
-	@Autowired
 	private PhysicalGoldTransactionService physicalGoldTransactionService;
-	
+		
+	public PhysicalGoldTransactionController(PhysicalGoldTransactionService physicalGoldTransactionService) {
+		this.physicalGoldTransactionService = physicalGoldTransactionService;
+	}
+
 	@GetMapping
 	ResponseEntity<List<PhysicalGoldTransaction>> getAllPhysicalGoldTransactions() {
 		return ResponseEntity.ok(physicalGoldTransactionService.getAllPhysicalGoldTransactions());

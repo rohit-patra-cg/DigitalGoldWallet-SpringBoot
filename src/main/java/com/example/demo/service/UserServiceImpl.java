@@ -3,11 +3,10 @@ package com.example.demo.service;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.SuccessResponse;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Address;
 import com.example.demo.entity.Payment;
 import com.example.demo.entity.PhysicalGoldTransaction;
@@ -26,23 +25,29 @@ import com.example.demo.repository.VirtualGoldHoldingRepository;
 @Service
 public class UserServiceImpl implements UserService {
 
-	@Autowired
 	private UserRepository userRepository;
 	
-	@Autowired
 	private AddressService addressService;
 	
-	@Autowired
 	private VirtualGoldHoldingRepository virtualGoldHoldingRepository;
 
-	@Autowired
 	private PhysicalGoldTransactionRepository physicalGoldTransactionRepository;
 	
-	@Autowired
 	private TransactionHistoryRepository transactionHistoryRepository;
 
-	@Autowired
 	private PaymentRepository paymentRepository;
+	
+	public UserServiceImpl(UserRepository userRepository, AddressService addressService,
+			VirtualGoldHoldingRepository virtualGoldHoldingRepository,
+			PhysicalGoldTransactionRepository physicalGoldTransactionRepository,
+			TransactionHistoryRepository transactionHistoryRepository, PaymentRepository paymentRepository) {
+		this.userRepository = userRepository;
+		this.addressService = addressService;
+		this.virtualGoldHoldingRepository = virtualGoldHoldingRepository;
+		this.physicalGoldTransactionRepository = physicalGoldTransactionRepository;
+		this.transactionHistoryRepository = transactionHistoryRepository;
+		this.paymentRepository = paymentRepository;
+	}
 
 	@Override
 	public List<User> getAllUsers() {
