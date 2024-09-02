@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.demo.entity.Address;
 import com.example.demo.entity.User;
 import com.example.demo.entity.VirtualGoldHolding;
 import com.example.demo.exception.UserNotFoundException;
@@ -25,6 +24,7 @@ import com.example.demo.repository.PhysicalGoldTransactionRepository;
 import com.example.demo.repository.TransactionHistoryRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.VirtualGoldHoldingRepository;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 @ExtendWith(MockitoExtension.class)
@@ -53,16 +53,16 @@ class UserServiceImplTest {
 
 	@Test
 	void testGetAllUsers() {
-		User user1 = new User(1, "john@example.com", "John Doe", new Address(), 1000.0, LocalDateTime.now());
-		User user2 = new User(2, "jane@example.com", "Jane Doe", new Address(), 1000.0, LocalDateTime.now());
+		User user1 = new User(1, "john@example.com", "John Doe", null, 1000.0, LocalDateTime.now());
+		User user2 = new User(2, "jane@example.com", "Jane Doe", null, 1000.0, LocalDateTime.now());
 		List<User> users = Arrays.asList(user1, user2);
 
 		when(userRepository.findAll()).thenReturn(users);
 
 		List<User> result = userServiceImpl.getAllUsers();
-		assertEquals(2, result.size());
-		assertEquals("John Doe", result.get(0).getName());
-		assertEquals("Jane Doe", result.get(1).getName());
+		
+		assertAll(() -> assertEquals(2, result.size()), () -> assertEquals("John Doe", result.get(0).getName()),
+				() -> assertEquals("Jane Doe", result.get(1).getName()));
 	}
 
 	@Test
