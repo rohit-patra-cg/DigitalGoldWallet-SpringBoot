@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("FROM User u WHERE u.address.state=:state")
 	List<User> findAllByState(String state);
 	
+	/** For Authentication*/
+	Optional<User> findByEmailIgnoreCase(String email);
 }

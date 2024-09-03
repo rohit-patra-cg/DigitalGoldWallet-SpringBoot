@@ -42,7 +42,7 @@ class TransactionHistoryServiceImplTest {
 		when(transactionHistoryRepository.findAll()).thenReturn(transactionHistories);
 
 		List<TransactionHistory> result = transactionHistoryServiceImpl.getAllTransactionHistory();
-		
+
 		assertAll(() -> assertEquals(2, result.size()), () -> assertEquals(tx1, result.get(0)),
 				() -> assertEquals(tx2, result.get(1)));
 	}
@@ -64,66 +64,67 @@ class TransactionHistoryServiceImplTest {
 		assertThrows(TransactionHistoryNotFoundException.class,
 				() -> transactionHistoryServiceImpl.getTransactionHistoryByTransactionHistoryId(1));
 	}
-	
 
-    @Test
-    void testGetTransactionHistoryByTransactionStatus_WhenTransactionStatusisSuccess() {
-        TransactionStatus status = TransactionStatus.SUCCESS;
-        TransactionHistory transaction = new TransactionHistory();
-        transaction.setTransactionId(1);
-        transaction.setTransactionStatus(status);
-        List<TransactionHistory> expected = Arrays.asList(transaction);
+	@Test
+	void testGetTransactionHistoryByTransactionStatus_WhenTransactionStatusisSuccess() {
+		TransactionStatus status = TransactionStatus.SUCCESS;
+		TransactionHistory transaction = new TransactionHistory();
+		transaction.setTransactionId(1);
+		transaction.setTransactionStatus(status);
+		List<TransactionHistory> expected = Arrays.asList(transaction);
 
-        when(transactionHistoryRepository.findAllByTransactionStatus(status)).thenReturn(expected);
+		when(transactionHistoryRepository.findAllByTransactionStatus(status)).thenReturn(expected);
 
-        List<TransactionHistory> actual = transactionHistoryServiceImpl.getTransactionHistoryByTransactionStatus(status);
+		List<TransactionHistory> actual = transactionHistoryServiceImpl
+				.getTransactionHistoryByTransactionStatus(status);
 
-        assertEquals(expected, actual);
-    }
-    
-    @Test
-    void testGetTransactionHistoryByTransactionStatus__WhenTransactionStatusisFailed() {
-        TransactionStatus status = TransactionStatus.FAILED;
-        TransactionHistory transaction = new TransactionHistory();
-        transaction.setTransactionId(1);
-        transaction.setTransactionStatus(status);
-        List<TransactionHistory> expected = Arrays.asList(transaction);
+		assertEquals(expected, actual);
+	}
 
-        when(transactionHistoryRepository.findAllByTransactionStatus(status)).thenReturn(expected);
+	@Test
+	void testGetTransactionHistoryByTransactionStatus__WhenTransactionStatusisFailed() {
+		TransactionStatus status = TransactionStatus.FAILED;
+		TransactionHistory transaction = new TransactionHistory();
+		transaction.setTransactionId(1);
+		transaction.setTransactionStatus(status);
+		List<TransactionHistory> expected = Arrays.asList(transaction);
 
-        List<TransactionHistory> actual = transactionHistoryServiceImpl.getTransactionHistoryByTransactionStatus(status);
+		when(transactionHistoryRepository.findAllByTransactionStatus(status)).thenReturn(expected);
 
-        assertEquals(expected, actual);
-    }
-    
-    @Test
-    void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisBuy(){
-        TxnHistoryTransactionType type = TxnHistoryTransactionType.BUY;
-        TransactionHistory transaction = new TransactionHistory();
-        transaction.setTransactionId(1);
-        transaction.setTransactionType(type);
-        List<TransactionHistory> expected = Arrays.asList(transaction);
+		List<TransactionHistory> actual = transactionHistoryServiceImpl
+				.getTransactionHistoryByTransactionStatus(status);
 
-        when(transactionHistoryRepository.findAllByTransactionType(type)).thenReturn(expected);
+		assertEquals(expected, actual);
+	}
 
-        List<TransactionHistory> actual = transactionHistoryServiceImpl.getTransactionHistoryByTransactionType(type);
+	@Test
+	void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisBuy() {
+		TxnHistoryTransactionType type = TxnHistoryTransactionType.BUY;
+		TransactionHistory transaction = new TransactionHistory();
+		transaction.setTransactionId(1);
+		transaction.setTransactionType(type);
+		List<TransactionHistory> expected = Arrays.asList(transaction);
 
-        assertEquals(expected, actual);
-    }
-    
-    @Test
-    void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisSell(){
-        TxnHistoryTransactionType type = TxnHistoryTransactionType.SELL;
-        TransactionHistory transaction = new TransactionHistory();
-        transaction.setTransactionId(1);
-        transaction.setTransactionType(type);
-        List<TransactionHistory> expected = Arrays.asList(transaction);
+		when(transactionHistoryRepository.findAllByTransactionType(type)).thenReturn(expected);
 
-        when(transactionHistoryRepository.findAllByTransactionType(type)).thenReturn(expected);
+		List<TransactionHistory> actual = transactionHistoryServiceImpl.getTransactionHistoryByTransactionType(type);
 
-        List<TransactionHistory> actual = transactionHistoryServiceImpl.getTransactionHistoryByTransactionType(type);
+		assertEquals(expected, actual);
+	}
 
-        assertEquals(expected, actual);
-    }
-    
+	@Test
+	void testGetTransactionHistoryByTransactionType__WhenTransactionTypeisSell() {
+		TxnHistoryTransactionType type = TxnHistoryTransactionType.SELL;
+		TransactionHistory transaction = new TransactionHistory();
+		transaction.setTransactionId(1);
+		transaction.setTransactionType(type);
+		List<TransactionHistory> expected = Arrays.asList(transaction);
+
+		when(transactionHistoryRepository.findAllByTransactionType(type)).thenReturn(expected);
+
+		List<TransactionHistory> actual = transactionHistoryServiceImpl.getTransactionHistoryByTransactionType(type);
+
+		assertEquals(expected, actual);
+	}
+
 }

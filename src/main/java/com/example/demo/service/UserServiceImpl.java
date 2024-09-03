@@ -2,9 +2,11 @@ package com.example.demo.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.LoginBody;
 import com.example.demo.dto.SuccessResponse;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Address;
@@ -21,6 +23,8 @@ import com.example.demo.repository.PhysicalGoldTransactionRepository;
 import com.example.demo.repository.TransactionHistoryRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.VirtualGoldHoldingRepository;
+import com.example.demo.security.EncryptionService;
+import com.example.demo.security.JWTService;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,17 +40,26 @@ public class UserServiceImpl implements UserService {
 	private TransactionHistoryRepository transactionHistoryRepository;
 
 	private PaymentRepository paymentRepository;
+	
+	private EncryptionService encryptionService;
+	
+	private JWTService jwtService;
+
+	
 
 	public UserServiceImpl(UserRepository userRepository, AddressService addressService,
 			VirtualGoldHoldingRepository virtualGoldHoldingRepository,
 			PhysicalGoldTransactionRepository physicalGoldTransactionRepository,
-			TransactionHistoryRepository transactionHistoryRepository, PaymentRepository paymentRepository) {
+			TransactionHistoryRepository transactionHistoryRepository, PaymentRepository paymentRepository,
+			EncryptionService encryptionService, JWTService jwtService) {
 		this.userRepository = userRepository;
 		this.addressService = addressService;
 		this.virtualGoldHoldingRepository = virtualGoldHoldingRepository;
 		this.physicalGoldTransactionRepository = physicalGoldTransactionRepository;
 		this.transactionHistoryRepository = transactionHistoryRepository;
 		this.paymentRepository = paymentRepository;
+		this.encryptionService = encryptionService;
+		this.jwtService = jwtService;
 	}
 
 	@Override
@@ -116,6 +129,7 @@ public class UserServiceImpl implements UserService {
 			user.setEmail(userDto.getEmail());
 			user.setBalance(userDto.getBalance());
 			user.setAddress(address);
+			user.setPasswordHash(encryptionService.encryptPassword(userDto.getPassword()));
 			User savedUser = userRepository.save(user);
 			return new SuccessResponse(new Date(), "User details added successfully", savedUser.getUserId());
 		}
@@ -153,4 +167,15 @@ public class UserServiceImpl implements UserService {
 		return new SuccessResponse(new Date(), "User address updated successfully", userId);
 	}
 
+	@Override
+	public String loginUser(LoginBody loginBody) {
+		Optional<User> optUser = userRepository.findByEmailIgnoreCase(loginBody.username());
+		if (optUser.isPresent()) {
+			User user = optUser.get();
+			if (encryptionService.verifyPassword(loginBody.password(), user.getPasswordHash())) {
+				return jwtService.generateJWT(user);
+			}
+		}
+		return null;
+	}
 }

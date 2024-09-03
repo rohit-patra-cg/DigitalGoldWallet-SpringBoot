@@ -60,7 +60,7 @@ class UserServiceImplTest {
 		when(userRepository.findAll()).thenReturn(users);
 
 		List<User> result = userServiceImpl.getAllUsers();
-		
+
 		assertAll(() -> assertEquals(2, result.size()), () -> assertEquals("John Doe", result.get(0).getName()),
 				() -> assertEquals("Jane Doe", result.get(1).getName()));
 	}

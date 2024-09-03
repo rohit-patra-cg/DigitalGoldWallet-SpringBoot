@@ -2,6 +2,8 @@ package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,9 @@ public class User {
 	@Column(unique = true)
 	private String email;
 
+	@JsonIgnore
+	private String passwordHash;
+
 	@NotBlank(message = "Name is mandatory")
 	@Size(max = 100, message = "Name can't be longer than 100 characters")
 	private String name;
@@ -40,9 +45,9 @@ public class User {
 	@Min(value = 0, message = "Balance must be positive")
 	private Double balance = 0.0;
 
-	@Column(updatable = false,columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private LocalDateTime createdAt = LocalDateTime.now();
-	
+
 	public User() {
 	}
 
@@ -102,4 +107,13 @@ public class User {
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
 	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
 }

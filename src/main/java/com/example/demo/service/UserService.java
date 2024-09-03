@@ -2,8 +2,9 @@ package com.example.demo.service;
 
 import java.util.List;
 
-import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.LoginBody;
 import com.example.demo.dto.SuccessResponse;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Payment;
 import com.example.demo.entity.PhysicalGoldTransaction;
 import com.example.demo.entity.TransactionHistory;
@@ -28,4 +29,7 @@ public interface UserService {
 	SuccessResponse updateUser(int userId, UserDTO user) throws UserNotFoundException, AddressNotFoundException;
 	SuccessResponse updateUserBalance(int userId, double newBalance) throws UserNotFoundException;
 	SuccessResponse updateUserAddress(int userId, int addressId) throws UserNotFoundException, AddressNotFoundException;
+	
+	//For Authentication returns jwt
+	String loginUser(LoginBody loginBody);
 }
