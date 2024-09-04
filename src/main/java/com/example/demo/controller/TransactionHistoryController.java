@@ -32,37 +32,73 @@ public class TransactionHistoryController {
 	public TransactionHistoryController(TransactionHistoryService transactionHistoryService) {
 		this.transactionHistoryService = transactionHistoryService;
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve all transaction history records
+	 * @return ResponseEntity containing a list of TransactionHistory objects and an HTTP status code(200)
+	 */
 	@GetMapping
 	ResponseEntity<List<TransactionHistory>> getAllTransactionHistory() {
 		return ResponseEntity.ok(transactionHistoryService.getAllTransactionHistory());
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve a specific transaction history record by its ID
+	 * @param transactionhistoryId
+	 * @return ResponseEntity containing the TransactionHistory object and an HTTP status code(200)
+	 * @throws TransactionHistoryNotFoundException
+	 */
 	@GetMapping("/{transaction_id}")
 	ResponseEntity<TransactionHistory> getTransactionHistoryByTransactionHistoryId(@PathVariable("transaction_id") int transactionhistoryId) throws TransactionHistoryNotFoundException {
 		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByTransactionHistoryId(transactionhistoryId));
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve all transaction history records associated with a specific user
+	 * @param userId
+	 * @return ResponseEntity containing a list of TransactionHistory objects and an HTTP status code(200)
+	 * @throws UserNotFoundException
+	 */
 	@GetMapping("/by_user/{user_id}")
 	ResponseEntity<List<TransactionHistory>> getTransactionHistoryByUserId(@PathVariable("user_id") int userId) throws UserNotFoundException {
 		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByUserId(userId));
 	}
 	
+	/**
+	 * Handles HTTP GET requests to retrieve all transaction history records with a status of SUCCESS
+	 * @return ResponseEntity containing a list of successful TransactionHistory objects and an HTTP status code(200)
+	 */
 	@GetMapping("/successful")
 	ResponseEntity<List<TransactionHistory>> getAllSuccessfulTransactionHistories() {
 		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByTransactionStatus(TransactionStatus.SUCCESS));
 	}
 	
+	/**
+	 * Handles HTTP GET requests to retrieve all transaction history records with a status of FAILED
+	 * @return ResponseEntity containing a list of successful TransactionHistory objects and an HTTP status code(200)
+	 */
 	@GetMapping("/failed")
 	ResponseEntity<List<TransactionHistory>> getAllFailedTransactionHistories() {
 		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByTransactionStatus(TransactionStatus.FAILED));
 	}
 	
+	/**
+	 * Handles HTTP GET requests to retrieve all transaction history records of a specific type
+	 * @param transactionType
+	 * @return ResponseEntity containing a list of TransactionHistory objects and an HTTP status code(200)
+	 */
 	@GetMapping("/by_type/{transaction_type}")
 	ResponseEntity<List<TransactionHistory>> getAllTransactionHistoriesByTransactionType(@PathVariable("transaction_type") TxnHistoryTransactionType transactionType) {
 		return ResponseEntity.ok(transactionHistoryService.getTransactionHistoryByTransactionType(transactionType));
 	}
 	
+	/**
+	 * Handles HTTP POST requests to create a new transaction history entry
+	 * @param transactionDto
+	 * @return ResponseEntity containing a SuccessResponse object and an HTTP status code(201)
+	 * @throws UserNotFoundException
+	 * @throws VendorBranchNotFoundException
+	 */
 	@PostMapping("/add")
 	ResponseEntity<SuccessResponse> createUser(@Valid @RequestBody TransactionHistoryDTO transactionDto) throws UserNotFoundException, VendorBranchNotFoundException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(transactionHistoryService.createTransaction(transactionDto));

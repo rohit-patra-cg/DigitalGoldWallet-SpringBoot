@@ -25,7 +25,12 @@ public class AuthenticationController {
 	public AuthenticationController(UserService userService) {
 		this.userService = userService;
 	}
-
+    
+	/**
+	 * Handles HTTP POST requests to authenticate a user and provide a JWT upon successful login.
+	 * @param loginBody
+	 * @return ResponseEntity containing a LoginResponse object and an HTTP status code(200)
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginBody loginBody) {
 		String jwt;
@@ -37,8 +42,13 @@ public class AuthenticationController {
 		LoginResponse loginResponse = new LoginResponse(jwt, true, null);
 		return ResponseEntity.ok(loginResponse);
 	}
-
-	@GetMapping("/me")
+	
+	/**
+	 * Handles HTTP GET requests to retrieve the profile information of the currently logged-in user.
+	 * @param user
+	 * @return User object containing the profile information of the logged-in user
+	 */
+    @GetMapping("/me")
 	public User getLoggedInUserProfile(@AuthenticationPrincipal User user) {
 		return user;
 	}

@@ -33,56 +33,119 @@ public class VendorBranchController {
 	public VendorBranchController(VendorBranchService vendorBranchService) {
 		this.vendorBranchService = vendorBranchService;
 	}
-
+    
+	
+	/**
+	 * Handles HTTP GET requests to retrieve all vendor branches
+	 * @return ResponseEntity containing a list of VendorBranch objects and an HTTP status code(200)
+	 */
 	@GetMapping
 	ResponseEntity<List<VendorBranch>> getAllVendorBranches() {
 		return ResponseEntity.ok(vendorBranchService.getAllVendorBranches());
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve a specific vendor branch by its ID.
+	 * @param branchId
+	 * @return  ResponseEntity containing the VendorBranch object and an HTTP status code(200)
+	 * @throws VendorBranchNotFoundException
+	 */
 	@GetMapping("/{branch_id}")
 	ResponseEntity<VendorBranch> getVendorBranchById(@PathVariable("branch_id") int branchId)
 			throws VendorBranchNotFoundException {
 		return ResponseEntity.ok(vendorBranchService.getVendorBranchByBranchId(branchId));
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve all vendor branches associated with a specific vendor
+	 * @param vendorId
+	 * @return ResponseEntity containing a list of VendorBranch objects and an HTTP status code(200)
+	 * @throws VendorBranchNotFoundException
+	 */
 	@GetMapping("/by_vendor/{vendor_id}")
 	ResponseEntity<List<VendorBranch>> getVendorBranchesByVendorId(@PathVariable("vendor_id") int vendorId)
 			throws VendorBranchNotFoundException {
 		return ResponseEntity.ok(vendorBranchService.getVendorBranchByVendorId(vendorId));
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve all vendor branches located in a specific city
+	 * @param city
+	 * @return ResponseEntity containing a list of VendorBranch objects and an HTTP status code(200)
+	 */
 	@GetMapping("/by_city/{city}")
 	ResponseEntity<List<VendorBranch>> getVendorBranchesByCity(@PathVariable("city") String city) {
 		return ResponseEntity.ok(vendorBranchService.getVendorBranchByCity(city));
 	}
-
+   
+	/**
+	 * Handles HTTP GET requests to retrieve all vendor branches located in a specific statE
+	 * @param state
+	 * @return  ResponseEntity containing a list of VendorBranch objects and an HTTP status code(200)
+	 */
 	@GetMapping("/by_state/{state}")
 	ResponseEntity<List<VendorBranch>> getVendorBranchesByState(@PathVariable("state") String state) {
 		return ResponseEntity.ok(vendorBranchService.getVendorBranchByState(state));
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve all vendor branches located in a specific country
+	 * @param country
+	 * @return ResponseEntity containing a list of VendorBranch objects and an HTTP status code(200)
+	 */
 	@GetMapping("/by_country/{country}")
 	ResponseEntity<List<VendorBranch>> getVendorBranchesByCountry(@PathVariable("country") String country) {
 		return ResponseEntity.ok(vendorBranchService.getVendorBranchByCountry(country));
 	}
-
+    
+	/**
+	 * Handles HTTP GET requests to retrieve all transaction history records associated with a specific vendor branch
+	 * @param branchId
+	 * @return ResponseEntity containing a list of TransactionHistory objects and an HTTP status code(200)
+	 * @throws VendorBranchNotFoundException
+	 */
 	@GetMapping("/transactions/{branch_id}")
 	ResponseEntity<List<TransactionHistory>> getVendorBranchTransactions(@PathVariable("branch_id") int branchId)
 			throws VendorBranchNotFoundException {
 		return ResponseEntity.ok(vendorBranchService.getVendorBranchTransactionsByBranchId(branchId));
 	}
-
+    
+	/**
+	 * Handles HTTP POST requests to add a new vendor branch
+	 * @param vendorBranchDTO
+	 * @return ResponseEntity containing a SuccessResponse object and an HTTP status code(201)
+	 * @throws VendorNotFoundException
+	 * @throws AddressNotFoundException
+	 */
 	@PostMapping("/add")
 	public ResponseEntity<SuccessResponse> addVendorBranch(@Valid @RequestBody VendorBranchDTO vendorBranchDTO)
 			throws VendorNotFoundException, AddressNotFoundException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(vendorBranchService.addVendorBranch(vendorBranchDTO));
 	}
-
+    
+	/**
+	 * Handles HTTP POST requests to transfer a specified quantity of gold between two vendor branches
+	 * @param sourceBranchId
+	 * @param destinationBranchId
+	 * @param quantity
+	 * @retur ResponseEntity containing a SuccessResponse object and an HTTP status code(200)
+	 * @throws VendorBranchNotFoundException
+	 * @throws InvalidGoldQuantityException
+	 */
 	@PostMapping("/transfer/{source_branch_id}/{destination_branch_id}/{quantity}")
 	public ResponseEntity<SuccessResponse> transferGoldBetweenBranches(@PathVariable("source_branch_id") int sourceBranchId, @PathVariable("destination_branch_id") int destinationBranchId, @PathVariable("quantity") double quantity) throws VendorBranchNotFoundException, InvalidGoldQuantityException {
 		return ResponseEntity.ok(vendorBranchService.transferGoldBetweenBranches(sourceBranchId, destinationBranchId, quantity));
 	}
-
+    
+	/**
+	 * Handles HTTP PUT requests to update details of a specific vendor branch
+	 * @param branchId
+	 * @param vendorBranchDTO
+	 * @return ResponseEntity containing a SuccessResponse object and an HTTP status code(200)
+	 * @throws VendorBranchNotFoundException
+	 * @throws AddressNotFoundException
+	 * @throws VendorNotFoundException
+	 */
 	@PutMapping("/update/{branch_id}")
 	public ResponseEntity<SuccessResponse> updateVendorBranch(@PathVariable("branch_id") int branchId, @RequestBody VendorBranchDTO vendorBranchDTO) throws VendorBranchNotFoundException, AddressNotFoundException, VendorNotFoundException {
 		return ResponseEntity.ok(vendorBranchService.updateVendorBranch(branchId, vendorBranchDTO));
