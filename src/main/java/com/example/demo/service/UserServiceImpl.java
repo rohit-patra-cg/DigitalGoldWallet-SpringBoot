@@ -62,64 +62,126 @@ public class UserServiceImpl implements UserService {
 		this.jwtService = jwtService;
 	}
 
+	/**
+	 * Get All Users
+	 * @return List<User> Collection of Users
+	 */
 	@Override
 	public List<User> getAllUsers() {
 		return userRepository.findAll();
 	}
 
+	/**
+	 * Get User by user_id
+	 * @param userId
+	 * @return User Object
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public User getUserByUserId(int userId) throws UserNotFoundException {
 		return userRepository.findById(userId)
 				.orElseThrow(() -> new UserNotFoundException("User#" + userId + " not found."));
 	}
 
+	/**
+	 * Get User by user_name
+	 * @param name
+	 * @return User Object
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public User getUserByUsername(String name) throws UserNotFoundException {
 		return userRepository.findByName(name)
 				.orElseThrow(() -> new UserNotFoundException("User with " + name + " not found."));
 	}
-
+	
+	/**
+	 * Get All User by city
+	 * @param city
+	 * @return List<User> Collection of Users 
+	 */
 	@Override
 	public List<User> getAllUsersByCity(String city) {
 		return userRepository.findAllByCity(city);
 	}
 
+	/**
+	 * Get All User by state
+	 * @param state
+	 * @return List<User> Collection of Users 
+	 */
 	@Override
 	public List<User> getAllUsersByState(String state) {
 		return userRepository.findAllByState(state);
 	}
 
+	/**
+	 * Get User Balance by user_id
+	 * @param userId
+	 * @return Double User's current balance
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public Double getUserBalanceByUserId(int userId) throws UserNotFoundException {
 		User user = getUserByUserId(userId);
 		return user.getBalance();
 	}
-
+	
+	/**
+	 * Get Total virtual gold holding of a User
+	 * @param userId
+	 * @return List<VirtualGoldHolding> Total virtual gold a user is holding currently 
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public List<VirtualGoldHolding> getAllVirtualGoldHoldingsByUserId(int userId) throws UserNotFoundException {
 		getUserByUserId(userId);
 		return virtualGoldHoldingRepository.findAllVirtualGoldHoldingByUserId(userId);
 	}
-
+	
+	/**
+	 * Get Total physical gold a User owns
+	 * @param userId
+	 * @return List<PhysicalGoldTransaction> Total physical gold a user owns
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public List<PhysicalGoldTransaction> getAllPhysicalGoldTransactionsByUserId(int userId)
 			throws UserNotFoundException {
 		getUserByUserId(userId);
 		return physicalGoldTransactionRepository.findAllPhysicalGoldTransactionsByUserId(userId);
 	}
-
+	
+	/**
+	 * Get User transaction history
+	 * @param userId
+	 * @return List<TransactionHistory> Collection of TransactionHistory
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public List<TransactionHistory> getAllTransactionsByUserId(int userId) throws UserNotFoundException {
 		getUserByUserId(userId);
 		return transactionHistoryRepository.findAllByUserId(userId);
 	}
-
+	
+	/**
+	 * Get User payments  
+	 * @param userId
+	 * @return List<Payment> Collection of Payments
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public List<Payment> getAllPaymentsByUserId(int userId) throws UserNotFoundException {
 		getUserByUserId(userId);
 		return paymentRepository.findAllByUserId(userId);
 	}
-
+	
+	/**
+	 * Add new User
+	 * @param userDto
+	 * @return SuccessResponse Response for successfully adding a user(Sign up)
+	 * @throws UserAlreadyExistsException, AddressNotFoundException
+	 */
 	@Override
 	public SuccessResponse createUser(UserDTO userDto) throws UserAlreadyExistsException, AddressNotFoundException {
 		if (userRepository.findByEmail(userDto.getEmail()).isEmpty()) {
@@ -135,7 +197,13 @@ public class UserServiceImpl implements UserService {
 		}
 		throw new UserAlreadyExistsException("User already exists");
 	}
-
+	
+	/**
+	 * Update User data
+	 * @param userId,userDto
+	 * @return SuccessResponse Response for successfully updating a user's data
+	 * @throws UserNotFoundException, AddressNotFoundException
+	 */
 	@Override
 	public SuccessResponse updateUser(int userId, UserDTO userDto)
 			throws UserNotFoundException, AddressNotFoundException {
@@ -148,7 +216,13 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 		return new SuccessResponse(new Date(), "User details updated successfully", userId);
 	}
-
+	
+	/**
+	 * Update User balance
+	 * @param userId, newBalance
+	 * @return SuccessResponse Response for successfully updating a user's balance
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public SuccessResponse updateUserBalance(int userId, double newBalance) throws UserNotFoundException {
 		User user = getUserByUserId(userId);
@@ -157,6 +231,12 @@ public class UserServiceImpl implements UserService {
 		return new SuccessResponse(new Date(), "User balance updated successfully", userId);
 	}
 
+	/**
+	 * Update User address
+	 * @param userId, addressId
+	 * @return SuccessResponse Response for successfully updating a user's address
+	 * @throws UserNotFoundException, AddressNotFoundException
+	 */
 	@Override
 	public SuccessResponse updateUserAddress(int userId, int addressId)
 			throws UserNotFoundException, AddressNotFoundException {
@@ -166,7 +246,12 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user);
 		return new SuccessResponse(new Date(), "User address updated successfully", userId);
 	}
-
+	
+	/**
+	 * Secure user login
+	 * @param loginBody DTO
+	 * @return jwtToken Creates and Returns a JWT token after successful login 
+	 */
 	@Override
 	public String loginUser(LoginBody loginBody) {
 		Optional<User> optUser = userRepository.findByEmailIgnoreCase(loginBody.username());

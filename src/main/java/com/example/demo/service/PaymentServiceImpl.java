@@ -14,6 +14,7 @@ import com.example.demo.enums.PaymentStatus;
 import com.example.demo.enums.PaymentTransactionType;
 import com.example.demo.exception.InvalidAmountException;
 import com.example.demo.exception.PaymentNotFoundException;
+import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.PaymentRepository;
 
@@ -28,33 +29,65 @@ public class PaymentServiceImpl implements PaymentService {
 		this.paymentRepository = paymentRepository;
 		this.userService = userService;
 	}
-
+	
+	/**
+	 * Get All Payments
+	 * @return List<Payment> Collection of Payments
+	 */
 	@Override
 	public List<Payment> getAllPayments() {
 		return paymentRepository.findAll();
 	}
-
+	
+	/**
+	 * Get Payment by payment_id
+	 * @param paymentId
+	 * @return Payment Object 
+	 * @throws PaymentNotFoundException
+	 */
 	@Override
 	public Payment getPaymentById(int paymentId) throws PaymentNotFoundException {
 		return paymentRepository.findById(paymentId).orElseThrow(() -> new PaymentNotFoundException("Payment#" + paymentId + " not found"));
 	}
-
+	
+	/**
+	 * Get All Payments by user_id
+	 * @param userId
+	 * @return List<Payment> Collection of Payments 
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public List<Payment> getAllPaymentsByUserId(int userId) throws UserNotFoundException {
 		userService.getUserByUserId(userId);
 		return paymentRepository.findAllByUserId(userId);
 	}
-
+	
+	/**
+	 * Get All Payments by PaymentStatus
+	 * @param paymentStatus
+	 * @return List<Payment> Collection of Payments  
+	 */
 	@Override
 	public List<Payment> getAllPaymentsByPaymentStatus(PaymentStatus paymentStatus) {
 		return paymentRepository.findAllByPaymentStatus(paymentStatus);
 	}
-
+	
+	/**
+	 * Get All Payments by PaymentMethod
+	 * @param paymentMethod
+	 * @return List<Payment> Collection of Payments  
+	 */
 	@Override
 	public List<Payment> getAllPaymentsByPaymentMethod(PaymentMethod paymentMethod) {
 		return paymentRepository.findAllByPaymentMethod(paymentMethod);
 	}
-
+	
+	/**
+	 * Add New Payment
+	 * @param paymentDTO
+	 * @return SuccessResponse Response for successfully adding a new payment
+	 * @throws UserNotFoundException, InvalidAmountException
+	 */
 	@Override
 	public SuccessResponse createPayment(PaymentDTO paymentDTO) throws UserNotFoundException, InvalidAmountException { 
 		User user = userService.getUserByUserId(paymentDTO.getUserId());
