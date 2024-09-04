@@ -13,7 +13,6 @@ import com.example.demo.entity.VendorBranch;
 import com.example.demo.enums.TransactionStatus;
 import com.example.demo.enums.TxnHistoryTransactionType;
 import com.example.demo.exception.TransactionHistoryNotFoundException;
-import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.exception.VendorBranchNotFoundException;
 import com.example.demo.repository.TransactionHistoryRepository;

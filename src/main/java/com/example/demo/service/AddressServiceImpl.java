@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.SuccessResponse;
 import com.example.demo.entity.Address;
 import com.example.demo.exception.AddressNotFoundException;
-import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.AddressRepository;
 
 @Service

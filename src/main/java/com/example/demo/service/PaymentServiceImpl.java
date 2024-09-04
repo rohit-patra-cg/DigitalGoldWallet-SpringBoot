@@ -14,7 +14,6 @@ import com.example.demo.enums.PaymentStatus;
 import com.example.demo.enums.PaymentTransactionType;
 import com.example.demo.exception.InvalidAmountException;
 import com.example.demo.exception.PaymentNotFoundException;
-import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.repository.PaymentRepository;
 
