@@ -52,22 +52,47 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 		this.physicalGoldTransactionRepository = physicalGoldTransactionRepository;
 		this.transactionHistoryRepository = transactionHistoryRepository;
 	}
+	
+	/**
+	 * Get All Virtual Gold Holdings
+	 * @return List<VirtualGoldHolding> collection of virtual Gold Holding
+	 */
 
 	@Override
 	public List<VirtualGoldHolding> getAllVirtualGoldHoldings() {
 		return virtualGoldHoldingRepository.findAll();
 	}
+	
+	/**
+	 * Get VirtualGoldHolding by holdingID
+	 * @param holdingId
+	 * @return The VirtualGoldHolding entity associated with the specified ID.
+	 * @throws virtualGoldHoldingNotFoundException
+	 */
 
 	@Override
 	public VirtualGoldHolding getVirtualGoldHoldingById(int holdingId) throws VirtualGoldHoldingNotFoundException {
 		return virtualGoldHoldingRepository.findById(holdingId).orElseThrow(() -> new VirtualGoldHoldingNotFoundException("VirtualGoldHolding#" + holdingId + " not found"));
 	}
-
+    
+	/**
+	 * Get AllVirtualGoldHoldingsByUserID
+	 * @param userId
+	 * @return The VirtualGoldHolding entity associated with the specified UserId.
+	 * @throws UserNotFoundException
+	 */
 	@Override
 	public List<VirtualGoldHolding> getAllVirtualGoldHoldingsByUserId(int userId) throws UserNotFoundException {
 		userService.getUserByUserId(userId);
 		return virtualGoldHoldingRepository.findAllVirtualGoldHoldingByUserId(userId);
 	}
+	
+	/**
+	 * Get AllVirtualoldHoldingsByUserIdAndVendorId
+	 * @param userId,vendorId
+	 * @return The VirtualGoldHolding entity with userId and VendorId.
+	 * @throws UserNotFoundException, VendorNotFoundException
+	 */
 
 	@Override
 	public List<VirtualGoldHolding> getAllVirtualGoldHoldingsByUserIdAndVendorId(int userId, int vendorId) throws UserNotFoundException, VendorNotFoundException {
@@ -75,7 +100,14 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 		vendorService.getVendorById(vendorId);
 		return virtualGoldHoldingRepository.findAllVirtualGoldHoldingByUserIdAndVendorId(userId, vendorId);
 	}
-
+	
+	/**
+	 * Add new VirtualGoldHolding based on provided DTO
+	 * @param  holdingDto this DTO contains details for new VirtualGoldHolding
+	 * @return A SuccessResponse indicating the result of the operation.
+	 * @throws VirtualGoldHoldingAreadyExistsException, VendorBranchNotFoundException, VendorBranchNotFoundException
+     */
+    
 	@Override
 	public SuccessResponse addVirtualGoldHolding(VirtualGoldHoldingDTO holdingDto)throws VirtualGoldHoldingAreadyExistsException, UserNotFoundException, VendorBranchNotFoundException {
 		User user = userService.getUserByUserId(holdingDto.getUserId());
@@ -87,8 +119,15 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 		VirtualGoldHolding savedVirtualGoldHolding = virtualGoldHoldingRepository.save(virtualGoldHolding);
 		return new SuccessResponse(new Date(),"Virtual Gold Holding data added successfully", savedVirtualGoldHolding.getHoldingId());
 	}
-
-	@Override
+	
+	/**
+	 * Updates an existing VirtualGoldHolding entity with new data provided in the DTO
+	 * @Param holdingId,holdingDto
+	 * @return A SuccessResponse indicating the result of the update operation
+	 * @throws UserNotFoundException, VendorBranchNotFoundException
+	 */
+	
+    @Override
 	public SuccessResponse updateVirtualGoldHolding(int holdingId, VirtualGoldHoldingDTO holdingDto)
 			throws VirtualGoldHoldingNotFoundException,UserNotFoundException, VendorBranchNotFoundException {
 		User user = userService.getUserByUserId(holdingDto.getUserId());
@@ -100,6 +139,13 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 		virtualGoldHoldingRepository.save(virtualGoldHolding);
 		return new SuccessResponse(new Date(),"Virtual Gold Holding data updated successfully", holdingId);
 	}
+    
+    /**
+     * Converts a specified quantity of virtual gold to physical gold and records the transaction.
+     * @param quantity,  holdingId
+     * @return SuccessResponse indicating the result of the conversion operation.
+     * @throws VirtualGoldHoldingNotFoundException, UserNotFoundException, VendorBranchNotFoundException, InvalidGoldQuantityException
+     */
 
 	@Override
 	@Transactional
