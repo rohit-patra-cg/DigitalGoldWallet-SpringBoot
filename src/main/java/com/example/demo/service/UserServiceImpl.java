@@ -266,4 +266,16 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
+
+	/**
+	 * Get User by user_email
+	 * @param email
+	 * @return User Object
+	 * @throws UserNotFoundException
+	 */
+	@Override
+	public User getUserByEmail(String email) throws UserNotFoundException {
+		Optional<User> optUser = userRepository.findByEmailIgnoreCase(email);
+		return optUser.orElseThrow(() -> new UserNotFoundException(email));
+	}
 }

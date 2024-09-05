@@ -1,4 +1,4 @@
 package com.example.demo.dto;
 
-public record LoginResponse(String jwt, Boolean success, String failureMessage) {
+public record LoginResponse(String jwt, Boolean success, String failureMessage, Integer userId) {
 }

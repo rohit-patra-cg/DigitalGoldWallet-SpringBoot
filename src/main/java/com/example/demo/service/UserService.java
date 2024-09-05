@@ -39,6 +39,14 @@ public interface UserService {
 	User getUserByUsername(String name) throws UserNotFoundException;
 	
 	/**
+	 * Get User by user_email
+	 * @param email
+	 * @return User Object
+	 * @throws UserNotFoundException
+	 */
+	User getUserByEmail(String email) throws UserNotFoundException;
+	
+	/**
 	 * Get All User by city
 	 * @param city
 	 * @return List<User> Collection of Users 

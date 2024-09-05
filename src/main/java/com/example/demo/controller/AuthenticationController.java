@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.dto.LoginBody;
 import com.example.demo.dto.LoginResponse;
 import com.example.demo.entity.User;
+import com.example.demo.exception.UserNotFoundException;
 import com.example.demo.service.UserService;
 
 import jakarta.validation.Valid;
@@ -30,16 +31,17 @@ public class AuthenticationController {
 	 * Handles HTTP POST requests to authenticate a user and provide a JWT upon successful login.
 	 * @param loginBody
 	 * @return ResponseEntity containing a LoginResponse object and an HTTP status code(200)
+	 * @throws UserNotFoundException 
 	 */
 	@PostMapping("/login")
-	public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginBody loginBody) {
+	public ResponseEntity<LoginResponse> loginUser(@Valid @RequestBody LoginBody loginBody) throws UserNotFoundException {
 		String jwt;
 		jwt = userService.loginUser(loginBody);
 
 		if (jwt == null) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-		LoginResponse loginResponse = new LoginResponse(jwt, true, null);
+		LoginResponse loginResponse = new LoginResponse(jwt, true, null, userService.getUserByEmail(loginBody.username()).getUserId());
 		return ResponseEntity.ok(loginResponse);
 	}
 	
