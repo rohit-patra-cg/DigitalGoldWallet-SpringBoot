@@ -20,7 +20,7 @@ public class Vendor {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int vendorId;
+	private Integer vendorId;
 
 	@NotBlank(message = "Vendor name is mandatory")
 	@Size(max = 100, message = "Vendor name can't be longer than 100 characters")
