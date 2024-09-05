@@ -180,7 +180,8 @@ public class UserServiceImpl implements UserService {
 	 * Add new User
 	 * @param userDto
 	 * @return SuccessResponse Response for successfully adding a user(Sign up)
-	 * @throws UserAlreadyExistsException, AddressNotFoundException
+	 * @throws UserAlreadyExistsException
+	 * @throws AddressNotFoundException
 	 */
 	@Override
 	public SuccessResponse createUser(UserDTO userDto) throws UserAlreadyExistsException, AddressNotFoundException {
@@ -202,7 +203,8 @@ public class UserServiceImpl implements UserService {
 	 * Update User data
 	 * @param userId,userDto
 	 * @return SuccessResponse Response for successfully updating a user's data
-	 * @throws UserNotFoundException, AddressNotFoundException
+	 * @throws UserNotFoundException
+	 * @throws AddressNotFoundException
 	 */
 	@Override
 	public SuccessResponse updateUser(int userId, UserDTO userDto)
@@ -235,7 +237,8 @@ public class UserServiceImpl implements UserService {
 	 * Update User address
 	 * @param userId, addressId
 	 * @return SuccessResponse Response for successfully updating a user's address
-	 * @throws UserNotFoundException, AddressNotFoundException
+	 * @throws UserNotFoundException
+	 * @throws AddressNotFoundException
 	 */
 	@Override
 	public SuccessResponse updateUserAddress(int userId, int addressId)

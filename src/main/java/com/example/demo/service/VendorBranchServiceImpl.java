@@ -119,7 +119,8 @@ public class VendorBranchServiceImpl implements VendorBranchService {
 	 * Add New Vendor Branch
 	 * @param branchDTO
 	 * @return SuccessResponse Response for successfully adding a new vendor branch
-	 * @throws VendorBranchNotFoundException, AddressNotFoundException
+	 * @throws VendorBranchNotFoundException
+	 * @throws AddressNotFoundException
 	 */
 	@Override
     public SuccessResponse addVendorBranch(VendorBranchDTO branchDTO) throws VendorNotFoundException, AddressNotFoundException {
@@ -135,7 +136,8 @@ public class VendorBranchServiceImpl implements VendorBranchService {
 	 * Transfers a specified quantity of gold from one vendor branch to another
 	 * @param sourceBranchId, destinationBranchId, quantity
 	 * @return SuccessResponse Response for successfully transferring gold between branches
-	 * @throws VendorBranchNotFoundException, InvalidGoldQuantityException
+	 * @throws VendorBranchNotFoundException 
+	 * @throws InvalidGoldQuantityException
 	 */
     @Override
     public SuccessResponse transferGoldBetweenBranches(int sourceBranchId, int destinationBranchId, double quantity) throws VendorBranchNotFoundException, InvalidGoldQuantityException {
@@ -155,7 +157,9 @@ public class VendorBranchServiceImpl implements VendorBranchService {
 	 * Update Vendorbranch details by branch_id
 	 * @param branchId, vendorBranchDTO
 	 * @return SuccessResponse Response for successfully updating Vendor Branch
-	 * @throws VendorBranchNotFoundException, AddressNotFoundException, VendorNotFoundException
+	 * @throws VendorBranchNotFoundException
+	 * @throws AddressNotFoundException
+	 * @throws VendorNotFoundException
 	 */
     @Override
     public SuccessResponse updateVendorBranch(int branchId, VendorBranchDTO vendorBranchDTO) throws VendorBranchNotFoundException, AddressNotFoundException, VendorNotFoundException {

@@ -104,7 +104,9 @@ public class PhysicalGoldTransactionServiceImpl implements PhysicalGoldTransacti
 	 * Add New Physical Gold Transactions
 	 * @param dto
 	 * @return SuccessResponse Response for successfully adding new physical gold transaction
-	 * @throws UserNotFoundException, AddressNotFoundException, VendorBranchNotFoundException
+	 * @throws UserNotFoundException
+	 * @throws AddressNotFoundException 
+	 * @throws VendorBranchNotFoundException
 	 */
 	@Override
 	public SuccessResponse createPhysicalGoldTransaction(PhysicalGoldTransactionDTO dto) throws UserNotFoundException, AddressNotFoundException, VendorBranchNotFoundException {
@@ -124,7 +126,10 @@ public class PhysicalGoldTransactionServiceImpl implements PhysicalGoldTransacti
 	 * Update Physical Gold Transactions by transaction_id
 	 * @param transactionId, PhysicalGoldTransactionDTO
 	 * @return SuccessResponse Response for successfully updating new physical gold transaction
-	 * @throws PhysicalGoldTransactionNotFoundException, VendorBranchNotFoundException, UserNotFoundException, AddressNotFoundException
+	 * @throws PhysicalGoldTransactionNotFoundException
+	 * @throws VendorBranchNotFoundException
+	 * @throws UserNotFoundException 
+	 * @throws AddressNotFoundException
 	 */
 	@Override
 	public SuccessResponse updatePhysicalGoldTransaction(int transactionId, PhysicalGoldTransactionDTO dto) throws PhysicalGoldTransactionNotFoundException, VendorBranchNotFoundException, UserNotFoundException, AddressNotFoundException {

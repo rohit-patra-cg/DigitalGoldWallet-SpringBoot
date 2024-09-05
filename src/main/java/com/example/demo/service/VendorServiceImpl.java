@@ -22,19 +22,18 @@ public class VendorServiceImpl implements VendorService {
 	
 	/**
 	 * Get all Vendors
-	 * @return List<Vendor> collection of All vendors
+	 * @return List<Vendor> Collection of Vendors
 	 */
-
 	@Override
 	public List<Vendor> getAllVendors() {
 		return vendorRepository.findAll();
 	}
    
 	/**
-	 * Get Vendor By Id
-	 * @param id The ID of the Vendor to be retrieved.
-	 * @return The Vendor entity associated with the specified ID
-	 * @throws VendorBranchNotFoundException
+	 * Get Vendor by vendor_id
+	 * @param id 
+	 * @return Vendor Object
+	 * @throws VendorNotFoundException
 	 */
 	@Override
 	public Vendor getVendorById(int id) throws VendorNotFoundException {
@@ -43,24 +42,23 @@ public class VendorServiceImpl implements VendorService {
 	}
 	
 	/**
-	 * Retrieves a Vendor entity by its name
+	 * Get Vendor by vendor_name
 	 * @param name
-	 * @return The Vendor entity associated with the specified name.
+	 * @return Vendor Object
 	 * @throws VendorNotFoundException
 	 */
-
 	@Override
 	public Vendor getVendorByName(String name) throws VendorNotFoundException {
 		return vendorRepository.findByVendorName(name)
 				.orElseThrow(() -> new VendorNotFoundException("Vendor with name " + name + " not found."));
 	}
+	
 	/**
-	 * Adds new Vendor
+	 * Add New Vendor
 	 * @param vendor
-	 * @return A SuccessResponse indicating the result of the add operation.
+	 * @return SuccessResponse Response for successfully adding a new vendor
 	 * @throws VendorAlreadyExistsException 
 	 */
-
 	@Override
 	public SuccessResponse addVendor(Vendor vendor) throws VendorAlreadyExistsException {
 		if (vendorRepository.findByContactEmail(vendor.getContactEmail()).isEmpty()) {
@@ -71,12 +69,11 @@ public class VendorServiceImpl implements VendorService {
 	}
 	
 	/**
-	 * Update Vendor by vendorId
-	 * @param vendorId,vendor
-	 * @return A SuccessResponse indicating the result of the update operation
+	 * Update Vendor by vendor_id
+	 * @param vendorId, vendor
+	 * @return SuccessResponse Response for successfully updating vendor
 	 * @throws VendorNotFoundException
 	 */
-
 	@Override
 	public SuccessResponse updateVendor(int vendorId, Vendor vendor) throws VendorNotFoundException {
 
@@ -95,9 +92,9 @@ public class VendorServiceImpl implements VendorService {
 	}
      
 	/**
-	 * Update Vendor totalGoldQuantity by vendorId
-	 * @param vendorId,quantity
-	 * @return A SuccessResponse indicating the result of the update operation.
+	 * Update Vendor total_gold_quantity by vendor_id
+	 * @param vendorId, quantity
+	 * @return SuccessResponse Response for successfully updating total gold quantity.
 	 * @throws VendorNotFoundException
 	 */
 	@Override
@@ -107,13 +104,13 @@ public class VendorServiceImpl implements VendorService {
 		vendorRepository.save(existingVendor);
 		return new SuccessResponse(new Date(), "Total gold quantity updated successfully", vendorId);
 	}
+	
 	/**
-	 * Update All Vendor Current Gold Price with new price
-	 * @param vendorId,newPrice
-	 * @return A SuccessResponse indicating the result of the update operation.
+	 * Update All Vendor Current Gold Price with new_price
+	 * @param vendorId, newPrice
+	 * @return SuccessResponse Response for successfully updating current gold price
 	 * @throws VendorNotFoundException
 	 */
-
 	@Override
 	public SuccessResponse updateCurrentGoldPrice(int vendorId, Double newPrice) throws VendorNotFoundException {
 		Vendor existingVendor = getVendorById(vendorId);

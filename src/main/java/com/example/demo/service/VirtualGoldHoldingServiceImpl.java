@@ -54,31 +54,29 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 	}
 	
 	/**
-	 * Get All Virtual Gold Holdings
-	 * @return List<VirtualGoldHolding> collection of virtual Gold Holding
+	 * Get All Virtual Gold Holding
+	 * @return List<VirtualGoldHolding> Collection of VirtualGoldHolding
 	 */
-
 	@Override
 	public List<VirtualGoldHolding> getAllVirtualGoldHoldings() {
 		return virtualGoldHoldingRepository.findAll();
 	}
 	
 	/**
-	 * Get VirtualGoldHolding by holdingID
+	 * Get Virtual Gold Holding by holding_id
 	 * @param holdingId
-	 * @return The VirtualGoldHolding entity associated with the specified ID.
+	 * @return VirtualGoldHolding Object
 	 * @throws virtualGoldHoldingNotFoundException
 	 */
-
 	@Override
 	public VirtualGoldHolding getVirtualGoldHoldingById(int holdingId) throws VirtualGoldHoldingNotFoundException {
 		return virtualGoldHoldingRepository.findById(holdingId).orElseThrow(() -> new VirtualGoldHoldingNotFoundException("VirtualGoldHolding#" + holdingId + " not found"));
 	}
     
 	/**
-	 * Get AllVirtualGoldHoldingsByUserID
+	 * Get All Virtual Gold Holding by users_id
 	 * @param userId
-	 * @return The VirtualGoldHolding entity associated with the specified UserId.
+	 * @return Collection of VirtualGoldHolding
 	 * @throws UserNotFoundException
 	 */
 	@Override
@@ -88,12 +86,12 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 	}
 	
 	/**
-	 * Get AllVirtualoldHoldingsByUserIdAndVendorId
-	 * @param userId,vendorId
-	 * @return The VirtualGoldHolding entity with userId and VendorId.
-	 * @throws UserNotFoundException, VendorNotFoundException
+	 * Get Virtual Gold Holding for a specific user and vendor
+	 * @param userId, vendorId
+	 * @return Collection of VirtualGoldHolding 
+	 * @throws UserNotFoundException
+	 * @throws VendorNotFoundException
 	 */
-
 	@Override
 	public List<VirtualGoldHolding> getAllVirtualGoldHoldingsByUserIdAndVendorId(int userId, int vendorId) throws UserNotFoundException, VendorNotFoundException {
 		userService.getUserByUserId(userId);
@@ -102,12 +100,13 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 	}
 	
 	/**
-	 * Add new VirtualGoldHolding based on provided DTO
-	 * @param  holdingDto this DTO contains details for new VirtualGoldHolding
-	 * @return A SuccessResponse indicating the result of the operation.
-	 * @throws VirtualGoldHoldingAreadyExistsException, VendorBranchNotFoundException, VendorBranchNotFoundException
+	 * Add New Virtual Gold Holding
+	 * @param  holdingDto 
+	 * @return SuccessResponse Response for successfully adding new virtual gold holding
+	 * @throws VirtualGoldHoldingAreadyExistsException
+	 * @throws UserNotFoundException 
+	 * @throws VendorBranchNotFoundException
      */
-    
 	@Override
 	public SuccessResponse addVirtualGoldHolding(VirtualGoldHoldingDTO holdingDto)throws VirtualGoldHoldingAreadyExistsException, UserNotFoundException, VendorBranchNotFoundException {
 		User user = userService.getUserByUserId(holdingDto.getUserId());
@@ -121,12 +120,13 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 	}
 	
 	/**
-	 * Updates an existing VirtualGoldHolding entity with new data provided in the DTO
-	 * @Param holdingId,holdingDto
-	 * @return A SuccessResponse indicating the result of the update operation
-	 * @throws UserNotFoundException, VendorBranchNotFoundException
+	 * Update Virtual Gold Holding by holding_id
+	 * @Param holdingId, holdingDto
+	 * @return SuccessResponse Response for successfully updating virtual gold holding
+	 * @throws VirtualGoldHoldingNotFoundException 
+	 * @throws UserNotFoundException
+	 * @throws VendorBranchNotFoundException
 	 */
-	
     @Override
 	public SuccessResponse updateVirtualGoldHolding(int holdingId, VirtualGoldHoldingDTO holdingDto)
 			throws VirtualGoldHoldingNotFoundException,UserNotFoundException, VendorBranchNotFoundException {
@@ -141,12 +141,14 @@ public class VirtualGoldHoldingServiceImpl implements VirtualGoldHoldingService 
 	}
     
     /**
-     * Converts a specified quantity of virtual gold to physical gold and records the transaction.
+     * Convert Virtual Gold Holding to Physical gold holding 
      * @param quantity,  holdingId
-     * @return SuccessResponse indicating the result of the conversion operation.
-     * @throws VirtualGoldHoldingNotFoundException, UserNotFoundException, VendorBranchNotFoundException, InvalidGoldQuantityException
+     * @return SuccessResponse Response for successfully converting virtual gold holding to physical gold holding 
+     * @throws VirtualGoldHoldingNotFoundException 
+     * @throws UserNotFoundException 
+     * @throws VendorBranchNotFoundException 
+     * @throws InvalidGoldQuantityException
      */
-
 	@Override
 	@Transactional
 	public SuccessResponse convertToPysical(double quantity, int holdingId)

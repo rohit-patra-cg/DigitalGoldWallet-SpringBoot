@@ -85,7 +85,8 @@ public class PaymentServiceImpl implements PaymentService {
 	 * Add New Payment
 	 * @param paymentDTO
 	 * @return SuccessResponse Response for successfully adding a new payment
-	 * @throws UserNotFoundException, InvalidAmountException
+	 * @throws UserNotFoundException
+	 * @throws InvalidAmountException
 	 */
 	@Override
 	public SuccessResponse createPayment(PaymentDTO paymentDTO) throws UserNotFoundException, InvalidAmountException { 
