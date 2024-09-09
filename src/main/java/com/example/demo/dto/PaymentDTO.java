@@ -13,12 +13,15 @@ public class PaymentDTO {
 	@Positive(message = "Amount must be positive")
 	private final Double amount;
 
+	@NotNull(message = "Payment Method is required")
 	@Enumerated(EnumType.STRING)
 	private final PaymentMethod paymentMethod;
 
+	@NotNull(message = "Transaction Type is required")
 	@Enumerated(EnumType.STRING)
 	private final PaymentTransactionType transactionType;
 
+	@NotNull(message = "Payment Status is required")
 	@Enumerated(EnumType.STRING)
 	private final PaymentStatus paymentStatus;
 
