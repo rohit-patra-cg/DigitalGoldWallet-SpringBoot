@@ -100,7 +100,7 @@ public class TransactionHistoryController {
 	 * @throws VendorBranchNotFoundException
 	 */
 	@PostMapping("/add")
-	ResponseEntity<SuccessResponse> createUser(@Valid @RequestBody TransactionHistoryDTO transactionDto) throws UserNotFoundException, VendorBranchNotFoundException {
+	ResponseEntity<SuccessResponse> createTransaction(@Valid @RequestBody TransactionHistoryDTO transactionDto) throws UserNotFoundException, VendorBranchNotFoundException {
 		return ResponseEntity.status(HttpStatus.CREATED).body(transactionHistoryService.createTransaction(transactionDto));
 	}
 }
